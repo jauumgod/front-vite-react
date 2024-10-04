@@ -1,10 +1,14 @@
-import ButtonComponent from "./ButtonComponent";
-import InputComponent from "./InputComponent";
+import ButtonComponent from "./ButtonComponent"
+import { Link } from "react-router-dom";
+
 
 
 const TableUser = () =>{
     return(
         <div className="space-y-4 p-6 bg-slate-600 rounded-md shadow flex flex-col text-white">
+            <div>
+                <Link to={"/novo_usuario"}><button className="bg-blue-800 rounded-md hover:bg-blue-900 py-2 px-2 font-bold">Novo usuario</button></Link>
+            </div>
             <table className="border-separate border border-slate-500 py-3">
                 <thead>
                     <tr>
@@ -18,10 +22,10 @@ const TableUser = () =>{
                 </thead>
                 <tbody>
                     <tr>
-                        <td className="border border-slate-700 hover:bg-slate-500">BRK-7TYS</td>
-                        <td className="border border-slate-700 hover:bg-slate-500">ORGANICS JK</td>
-                        <td className="border border-slate-700 hover:bg-slate-500 text-black" ><InputComponent/></td>
-                        <td className=" border-slate-700"><ButtonComponent color="bg-red" nameButton = "Desativar"/></td>
+                        <td className="border border-slate-700 hover:bg-slate-500">administrador</td>
+                        <td className="border border-slate-700 hover:bg-slate-500">Organics</td>
+                        <td className="border border-slate-700 hover:bg-slate-500 text-black" ><input type="password" /></td>
+                        <td className=" border-slate-700"><ButtonComponent alert={'tem certeza?'} color="bg-red" nameButton = "Desativar"/></td>
                         <td className=" border-slate-700"><ButtonComponent color="bg-slate-800" nameButton = "Salvar"/></td>
                     </tr>
                 </tbody>

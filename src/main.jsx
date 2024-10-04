@@ -6,10 +6,11 @@ import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import ListTickets from './pages/ListTickets.jsx'
 import CreateTicket from './pages/CreateTicket.jsx'
-import PrintTicket from './pages/PrintTicket.jsx'
+import TicketPrint from './pages/TicketPrint.jsx'
 import HomePage from './pages/HomePage.jsx'
 import Configuracoes from './pages/Configuracoes.jsx'
 import LoginPage from './pages/LoginPage.jsx'
+import ErrorPage from './pages/ErrorPage.jsx'
 
 const AppWrapper = () =>{
   const [user, setUser] = useState(null);
@@ -18,6 +19,7 @@ const AppWrapper = () =>{
     {
       path: "/",
       element: <App/>,
+      errorElement: <ErrorPage/>,
       children: [
         {
           path: "/login",
@@ -37,7 +39,7 @@ const AppWrapper = () =>{
         },
         {
           path: "/print",
-          element:<PrintTicket/>
+          element:<TicketPrint/>
         },
         {
           path: "/config",

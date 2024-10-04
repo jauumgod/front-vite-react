@@ -3,6 +3,7 @@ import ButtonComponent from "../components/ButtonComponent";
 import H2Component from "../components/H2Component";
 import apiService from '../services/apiService';
 import React, { useState, useEffect } from 'react';
+import { Image, Printer } from 'lucide-react'; // Importando os ícones
 
 const ListTickets = () => {
   const [tickets, setTickets] = useState([]);
@@ -11,28 +12,25 @@ const ListTickets = () => {
   const [criacao, setCriacao] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalTickets, setTotalTickets] = useState(0);
-  const [isLoading, setIsLoading] = useState(true); // Estado para controlar o carregamento
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Função para buscar os tickets com paginação
   const fetchTickets = () => {
-    setIsLoading(true); // Ativa o estado de carregamento antes de buscar os tickets
-    apiService.getTickets(operacao, sequencia, criacao, currentPage, 5)
+    setIsLoading(true);
+    apiService.getTickets(operacao, sequencia, criacao, currentPage, 7)
       .then(response => {
         setTickets(response.data.results);
         setTotalTickets(response.data.count);
       })
       .catch(error => console.error('Erro ao buscar os tickets:', error))
-      .finally(() => setIsLoading(false)); // Desativa o estado de carregamento após buscar os tickets
+      .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
     fetchTickets();
   }, [currentPage, operacao, sequencia, criacao]);
 
-  // Calculando o número total de páginas com base no total de tickets
-  const totalPages = Math.ceil(totalTickets / 5);
+  const totalPages = Math.ceil(totalTickets / 7);
 
-  // Função para mudar a página
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
       setCurrentPage(newPage);
@@ -42,8 +40,6 @@ const ListTickets = () => {
   return (
     <div className="min-h-screen w-full bg-slate-800 rounded-md shadow flex flex-col text-white">
       <H2Component title="Tickets" />
-
-      {/* Spinner de Carregamento */}
       {isLoading ? (
         <div className="flex justify-center items-center h-32">
           <div className="w-12 h-12 border-4 border-t-4 border-t-transparent border-white rounded-full animate-spin"></div>
@@ -73,18 +69,24 @@ const ListTickets = () => {
                 <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.cliente}</td>
                 <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.peso_liquido}</td>
                 <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.criacao}</td>
-                <td className="border-slate-700">
+                <td className="border-slate-700 flex space-x-2">
+                <div className="flex rounded-md bg-slate-200 p-2 px-2 text-gray-800">
                   <Link to={"/print"} state={{ ticketId: ticket.id }}>
-                    <ButtonComponent color="bg-slate-800" nameButton="Imprimir" />
+                    <Printer className="w-4 h-4 mr-1" />
                   </Link>
+                </div>
+                <div className="flex rounded-md bg-slate-200 p-2 text-gray-800">
+                  <Link to={`/imagens/${ticket.id}`} state={{ ticketId: ticket.id }}>
+                    <Image className="w-4 h-4 mr-1" />
+                  </Link>
+                </div>
+
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
-
-      {/* Componente de Paginação */}
       {!isLoading && (
         <div className="flex p-4 text-center justify-end space-x-2">
           <ButtonComponent

@@ -5,7 +5,7 @@ const CardComponent = ({ tickets, totalTickets }) => {
       <p className="mx-auto mt-2 max-w-lg text-pretty text-center text-4xl font-medium tracking-tight text-white sm:text-5xl">
         Analise de criação dos Tickets
       </p>
-      <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-3 lg:grid-rows-2">
+      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3 ">
         
         {/* Card 1: Total de Tickets Emitidos */}
         <div className="relative flex flex-col items-center bg-slate-200 shadow-lg rounded-lg p-6">

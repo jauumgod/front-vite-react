@@ -1,3 +1,4 @@
+import { Bold, Bolt, Save } from "lucide-react";
 import ButtonComponent from "./ButtonComponent"
 import { Link } from "react-router-dom";
 
@@ -14,19 +15,17 @@ const TableUser = () =>{
                     <tr>
                         <th className="border border-slate-800 bg-slate-800">Nome</th>
                         <th className="border border-slate-800 bg-slate-800">Empresa</th>
-                        <th className="border border-slate-800 bg-slate-800">Nova Senha</th>
-                        <th className="border border-slate-800 bg-slate-800">Desativar</th>
-                        <th className="border border-slate-800 bg-slate-800">Salvar</th>
+                        <th className="border border-slate-800 bg-slate-800">Opções</th>
 
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td className="border border-slate-700 hover:bg-slate-500">administrador</td>
-                        <td className="border border-slate-700 hover:bg-slate-500">Organics</td>
-                        <td className="border border-slate-700 hover:bg-slate-500 text-black" ><input type="password" /></td>
-                        <td className=" border-slate-700"><ButtonComponent alert={'tem certeza?'} color="bg-red" nameButton = "Desativar"/></td>
-                        <td className=" border-slate-700"><ButtonComponent color="bg-slate-800" nameButton = "Salvar"/></td>
+                        <td className="border text-center border-slate-700 hover:bg-slate-500">administrador</td>
+                        <td className="border text-center border-slate-700 hover:bg-slate-500">Organics</td>
+                        <td className="border text-center border-slate-700">
+                            <Link><ButtonComponent nameButton = "Editar"/></Link>
+                        </td>
                     </tr>
                 </tbody>
             </table>

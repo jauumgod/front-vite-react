@@ -37,6 +37,17 @@
     cursor: pointer;
     transition: background-color 0.3s;
   }
+.btn-green {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 15px;
+    background-color: #0a4218;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
   
 .btn-print:hover {
     background-color: #0056b3;

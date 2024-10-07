@@ -9,6 +9,7 @@ function App() {
 const location = useLocation();
 const [user, setUser] = useState(null);
 
+
 const isLoginPage = location.pathname === '/login';
   return (
     <div className=" min-h-screen w-full bg-slate-800 flex  flex-col">

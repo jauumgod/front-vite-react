@@ -4,6 +4,7 @@ import H2Component from "../components/H2Component";
 import apiService from '../services/apiService';
 import React, { useState, useEffect } from 'react';
 import { Image, Printer } from 'lucide-react'; // Importando os ícones
+import withAuth from '../utils/withAuth';
 
 const ListTickets = () => {
   const [tickets, setTickets] = useState([]);
@@ -123,4 +124,4 @@ const ListTickets = () => {
   );
 };
 
-export default ListTickets;
+export default withAuth(ListTickets);

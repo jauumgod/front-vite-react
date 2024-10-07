@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import CardComponent from '../components/CardComponent';
 import apiService from '../services/apiService';
+import withAuth from '../utils/withAuth';
 
 const HomePage = () => {
   const [tickets, setTickets] = useState([]);
@@ -39,4 +40,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default withAuth (HomePage);

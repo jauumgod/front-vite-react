@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importar useNavigate do react-router-dom
+import { useNavigate } from 'react-router-dom';
 import authService from "../services/authService";
 import InputComponent from "../components/InputComponent";
-import ButtonComponent from '../components/ButtonComponent';
-
 
 
 const LoginPage = ({ setUser }) => {
@@ -12,9 +10,7 @@ const LoginPage = ({ setUser }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
   const navigate = useNavigate(); // Hook para navegação
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);

@@ -1,8 +1,16 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { CircleUser, UserRoundPen } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { CircleUser } from "lucide-react";
+import LogoutUser from "./LogoutUser";
 
 const Navbar = () => {
+
+  const navigate = useNavigate();
+
+  const handleLogout = ()=>{
+    LogoutUser();
+    navigate('/logout');
+  };
 
   const [showMenu, setShowMenu] = useState(false);
   return (
@@ -149,7 +157,7 @@ const Navbar = () => {
                     <button
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                       role="menuitem"
-                      onClick={() => alert('Sair')}
+                      onClick={handleLogout}
                     >
                       Sair
                     </button>

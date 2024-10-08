@@ -26,7 +26,7 @@ const TableEmpresas = () => {
   return (
     <div className="space-y-4 p-6 bg-slate-600 rounded-md shadow flex flex-col text-white">
       <div>
-        <Link to="/novo_usuario">
+        <Link to="/empresa">
           <button className="bg-blue-800 rounded-md hover:bg-blue-900 py-2 px-2 font-bold">
             Nova empresa
           </button>

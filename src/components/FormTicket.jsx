@@ -54,6 +54,7 @@ const FormTicket = () => {
       peso_saida: pesoSaida,
       peso_liquido: pesoLiquido,
       lote_leira: loteLeira,
+      umidade: umidade,
       ticket_cancelado: false,
     };
 
@@ -63,16 +64,26 @@ const FormTicket = () => {
       .then(response => {
         console.log('Ticket criado com sucesso:', response.data);
         setSuccessMessage('Ticket criado com sucesso!');
-        setTimeout(() => {
-          setSuccessMessage('');
-          window.location.reload();
-        }, 2000);
+      // Exibe um toast de sucesso
+
+      toast.success('Ticket criado com sucesso!', {
+        position: toast.POSITION.TOP_RIGHT, // Defina a posição do toast
+        autoClose: 3000, // Defina a duração (em ms) do toast
+      });
       })
       .catch(error => {
         if (error.response) {
           console.error('Erro ao criar o ticket:', error.response.data);
+          toast.error('Erro ao criar o ticket!', {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 3000,
+          });
         } else {
           console.error('Erro ao criar o ticket:', error);
+          toast.error('Erro ao criar o ticket!', {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 3000,
+          });
         }
       });
   };

@@ -11,8 +11,9 @@ import HomePage from './pages/HomePage.jsx'
 import Configuracoes from './pages/Configuracoes.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import ErrorPage from './pages/ErrorPage.jsx'
-import novoUsuario from './pages/novoUsuario.jsx'
 import Logout from './pages/Logout.jsx'
+import NovoUsuario from './pages/NovoUsuario.jsx'
+import NovaEmpresa from './pages/NovaEmpresa.jsx'
 
 const AppWrapper = () =>{
   const [user, setUser] = useState(null);
@@ -48,8 +49,12 @@ const AppWrapper = () =>{
           element:<Configuracoes/>
         },
         {
-          path: "/novo_usuario",
-          element:<novoUsuario/>
+          path: "/usuarios",
+          element:<NovoUsuario/>
+        },
+        {
+          path: "/empresa",
+          element:<NovaEmpresa/>
         },
         {
           path: "/logout",

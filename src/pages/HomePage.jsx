@@ -1,14 +1,21 @@
-import { useState, useEffect } from 'react';
-import CardComponent from '../components/CardComponent';
-import apiService from '../services/apiService';
+import React, {useContext,  useState, useEffect} from 'react';
 import withAuth from '../utils/withAuth';
+import CardComponent2 from "../components/CardComponent2";
+import ComponentList from "../components/ComponentList";
+import apiService from '../services/apiService';
+import {AppContext} from "../context/AppContext";
+
 
 const HomePage = () => {
+
   const [tickets, setTickets] = useState([]);
   const [totalTickets, setTotalTickets] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const {isLoading, setIsLoading }= useContext(AppContext);
 
+  
   const fetchTickets = () => {
+    setIsLoading(true);
+
     apiService
       .getTickets(tickets, totalTickets)
       .then((response) => {
@@ -26,6 +33,9 @@ const HomePage = () => {
     fetchTickets();
   }, []);
 
+  console.log("Estado atual: ", isLoading)
+  console.log(tickets)
+
   return (
     <div className="min-h-screen w-full bg-slate-800 flex flex-col py-4">
       {isLoading ? (
@@ -34,7 +44,12 @@ const HomePage = () => {
           <span className="ml-2">Carregando tickets...</span>
         </div>
       ) : (
-        <CardComponent tickets={tickets} totalTickets={totalTickets} />
+    <div className='flex space-x-4 justify-center'>
+        <div>
+        <CardComponent2 title="Tickets Emitidos" body={totalTickets} />
+        </div>
+
+    </div>
       )}
     </div>
   );

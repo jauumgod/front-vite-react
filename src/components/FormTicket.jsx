@@ -64,16 +64,16 @@ const FormTicket = () => {
       .then(response => {
         console.log('Ticket criado com sucesso:', response.data);
         setSuccessMessage('Ticket criado com sucesso!');
-        toast('Ticket Criado com sucesso!');
+        toast.success('Ticket Criado com sucesso!');
         FormTicket('');
       })
       .catch(error => {
         if (error.response) {
           console.error('Erro ao criar o ticket:', error.response.data);
-          toast('Erro ao criar o ticket!');
+          toast.error('Erro ao criar o ticket!');
         } else {
           console.error('Erro ao criar o ticket:', error);
-          toast('Erro ao criar o ticket!');
+          toast.error('Erro ao criar o ticket!');
         }
       });
   };

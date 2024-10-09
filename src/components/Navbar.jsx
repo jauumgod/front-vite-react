@@ -13,6 +13,8 @@ const Navbar = () => {
   };
 
   const [showMenu, setShowMenu] = useState(false);
+
+
   return (
     <div>
       <nav className="bg-gray-900">
@@ -79,7 +81,7 @@ const Navbar = () => {
                     to="/novo"
                     className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                   >
-                    Novo
+                    Novo Ticket
                   </Link>
                   <Link
                     to="/tickets"
@@ -140,6 +142,7 @@ const Navbar = () => {
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
                   >
+                    <p>{}</p>
                     <button
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                       role="menuitem"

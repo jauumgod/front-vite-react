@@ -1,10 +1,9 @@
 import ButtonComponent from './ButtonComponent';
 import InputComponent from './InputComponent'
 import axios from 'axios';
-import React, { useState } from 'react';
-
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useContext, useState } from 'react';
+import { AppContext } from '../context/AppContext';
+import { toast } from 'sonner';
 
 
 const FormTicket = () => {
@@ -21,6 +20,7 @@ const FormTicket = () => {
   const [umidade, setUmidade] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
+  const {setTicketCriado} = useContext(AppContext);
   
   
   const handlePesoEntradaChange = (value) => {
@@ -64,26 +64,16 @@ const FormTicket = () => {
       .then(response => {
         console.log('Ticket criado com sucesso:', response.data);
         setSuccessMessage('Ticket criado com sucesso!');
-      // Exibe um toast de sucesso
-
-      toast.success('Ticket criado com sucesso!', {
-        position: toast.POSITION.TOP_RIGHT, // Defina a posição do toast
-        autoClose: 3000, // Defina a duração (em ms) do toast
-      });
+        toast('Ticket Criado com sucesso!');
+        FormTicket('');
       })
       .catch(error => {
         if (error.response) {
           console.error('Erro ao criar o ticket:', error.response.data);
-          toast.error('Erro ao criar o ticket!', {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 3000,
-          });
+          toast('Erro ao criar o ticket!');
         } else {
           console.error('Erro ao criar o ticket:', error);
-          toast.error('Erro ao criar o ticket!', {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 3000,
-          });
+          toast('Erro ao criar o ticket!');
         }
       });
   };

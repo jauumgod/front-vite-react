@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Navbar from './components/Navbar';
+import { Toaster } from "sonner";
 
 
 
@@ -16,6 +17,7 @@ const isLoginPage = location.pathname === '/login';
 
       {!isLoginPage && <Navbar/>}
         <Outlet context={{user, setUser}}/>
+        <Toaster/>
     </div>
   )
 }

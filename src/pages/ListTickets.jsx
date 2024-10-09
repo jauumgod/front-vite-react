@@ -17,7 +17,7 @@ const ListTickets = () => {
 
   const fetchTickets = () => {
     setIsLoading(true);
-    apiService.getTickets(operacao, sequencia, criacao, currentPage, 7)
+    apiService.getTickets(operacao, sequencia, criacao, currentPage)
       .then(response => {
         setTickets(response.data.results);
         setTotalTickets(response.data.count);
@@ -30,7 +30,7 @@ const ListTickets = () => {
     fetchTickets();
   }, [currentPage, operacao, sequencia, criacao]);
 
-  const totalPages = Math.ceil(totalTickets / 7);
+  const totalPages = Math.ceil(totalTickets / 5);
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {

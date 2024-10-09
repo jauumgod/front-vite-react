@@ -32,8 +32,9 @@ const LoginPage = ({ setUser }) => {
 
   return (
     <div className="min-h-screen w-full bg-slate-800 flex justify-center py-40">
-        {error && <div className="alert alert-danger">{error}</div>}
+        
       <form onSubmit={handleSubmit} className="w-[450px] space-y-4">
+      {error && <div className=""><p className='text-red-400 text-center font-bold'>{error}</p></div>}
         <h2 className=" text-slate-100 font-bold text-center text-3xl">Login</h2>
         <InputComponent
           type="text"

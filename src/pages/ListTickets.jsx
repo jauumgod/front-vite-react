@@ -51,7 +51,7 @@ const ListTickets = () => {
           <thead>
             <tr>
               <th className="border border-slate-800 bg-slate-900">Nº Ticket</th>
-              <th className="border border-slate-800 bg-slate-900">Placa</th>
+              <th className="border border-slate-800 bg-slate-900">Empresa</th>
               <th className="border border-slate-800 bg-slate-900">Produto</th>
               <th className="border border-slate-800 bg-slate-900">Transportadora</th>
               <th className="border border-slate-800 bg-slate-900">Cliente</th>
@@ -64,8 +64,8 @@ const ListTickets = () => {
             {tickets.map((ticket) => (
               <tr key={ticket.id}>
                 <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.sequencia}</td>
-                <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.placa}</td>
                 <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.empresa.nome}</td>
+                <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.produto}</td>
                 <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.transportadora}</td>
                 <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.cliente}</td>
                 <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.peso_liquido}</td>

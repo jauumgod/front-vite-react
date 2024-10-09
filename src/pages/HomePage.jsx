@@ -1,9 +1,9 @@
 import React, {useContext,  useState, useEffect} from 'react';
 import withAuth from '../utils/withAuth';
-import CardComponent2 from "../components/CardComponent2";
-import ComponentList from "../components/ComponentList";
 import apiService from '../services/apiService';
 import {AppContext} from "../context/AppContext";
+import ComponentList from '../components/ComponentList';
+import GraphComponent from '../components/GraphComponent';
 
 
 const HomePage = () => {
@@ -44,10 +44,20 @@ const HomePage = () => {
           <span className="ml-2">Carregando tickets...</span>
         </div>
       ) : (
-    <div className='flex space-x-4 justify-center'>
-        <div>
-        <CardComponent2 title="Tickets Emitidos" body={totalTickets} />
-        </div>
+    <div>
+      <div className='flex space-x-4 justify-center mt-6'>
+          <ComponentList title={"Tickets Emitidos"} total={totalTickets}/>
+
+          <ComponentList title={"Tickets Concluídos"} total={15}/>
+
+          <ComponentList title={"Pendentes"} total={2}/>
+      </div>
+      <div className='flex space-x-4 justify-center mt-6'>
+        <GraphComponent/>
+      </div>
+ 
+
+ 
 
     </div>
       )}

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import authService from "../services/authService";
 import InputComponent from "../components/InputComponent";
 import AppContext from "../context/AppContext";
+import { MoveRight } from 'lucide-react';
 
 
 const LoginPage = () => {
@@ -58,7 +59,7 @@ const LoginPage = () => {
           type="submit"
           className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
         >
-         {loading ? 'Carregando...' : 'Login'}
+         {loading ? 'Carregando...' : `Login ${<MoveRight/>}`}
         </button>
       </form>
     </div>

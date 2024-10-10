@@ -3,7 +3,7 @@ import ButtonComponent from "../components/ButtonComponent";
 import H2Component from "../components/H2Component";
 import apiService from '../services/apiService';
 import React, { useState, useEffect } from 'react';
-import { Image, Printer } from 'lucide-react'; // Importando os ícones
+import { Check, CircleMinus, Image, Printer } from 'lucide-react'; // Importando os ícones
 import withAuth from '../utils/withAuth';
 
 const ListTickets = () => {
@@ -14,10 +14,11 @@ const ListTickets = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalTickets, setTotalTickets] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [isComplete, setIsComplete] = useState(false);
 
   const fetchTickets = () => {
     setIsLoading(true);
-    apiService.getTickets(operacao, sequencia, criacao, currentPage)
+    apiService.getTickets(operacao, concluido, sequencia, criacao, currentPage)
       .then(response => {
         setTickets(response.data.results);
         setTotalTickets(response.data.count);
@@ -73,12 +74,21 @@ const ListTickets = () => {
                 <td className="border-slate-700 flex space-x-2">
                 <div className="flex rounded-md bg-slate-200 p-2 px-2 text-gray-800">
                   <Link to={"/print"} state={{ ticketId: ticket.id }}>
-                    <Printer className="w-4 h-4 mr-1" />
+                    <Printer className="text-orange-500" />
                   </Link>
                 </div>
                 <div className="flex rounded-md bg-slate-200 p-2 text-gray-800">
                   <Link to={`/imagens/${ticket.id}`} state={{ ticketId: ticket.id }}>
-                    <Image className="w-4 h-4 mr-1" />
+                    <Image className="text-blue-500" />
+                  </Link>
+                </div>
+                <div className="flex rounded-md bg-slate-200 p-2 text-gray-800">
+                  <Link to={`${ticket.id}`} state={{ ticketId: ticket.id }}>
+                    {isComplete? <span>
+                      <Check className="text-green-500"/>
+                      </span>: <span>
+                        <CircleMinus className="text-red-500"/>
+                      </span> }
                   </Link>
                 </div>
 

@@ -32,10 +32,7 @@ const HomePage = () => {
   useEffect(() => {
     fetchTickets();
   }, []);
-
-  console.log("Estado atual: ", isLoading)
-  console.log(tickets)
-
+  
   return (
     <div className="min-h-screen w-full bg-slate-800 flex flex-col py-4">
       {isLoading ? (

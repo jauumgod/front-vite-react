@@ -55,12 +55,10 @@ const TableUser = () => {
             {usuarios.length > 0 ? (
               usuarios.map((usuario,index) => (
                 <tr key={index}>
-                  {/* Exibindo o username retornado pela API */}
                   <td className="border text-center border-slate-700 hover:bg-slate-500">
                     {usuario.username}
                   </td>
-                  
-                  {/* Exibindo a lista de empresas associadas ao usuário */}
+                
                   <td className="border text-center border-slate-700 hover:bg-slate-500">
                     {usuario.empresas.join(', ')}
                   </td>

@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import authService from "../services/authService";
 import InputComponent from "../components/InputComponent";
+import AppContext from "../context/AppContext";
 
 
-const LoginPage = ({ setUser }) => {
+const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate(); // Hook para navegação
+
+  const {setUser} = useContext(AppContext);
+  const navigate = useNavigate();
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -21,7 +26,6 @@ const LoginPage = ({ setUser }) => {
       navigate('/home'); // Redireciona para a rota '/dashboard' após login bem-sucedido
     } catch (error) {
       setError(error.message);
-      console.log(username, password);
       console.log(error.message);
     } finally {
       setLoading(false);
@@ -32,7 +36,6 @@ const LoginPage = ({ setUser }) => {
 
   return (
     <div className="min-h-screen w-full bg-slate-800 flex justify-center py-40">
-        
       <form onSubmit={handleSubmit} className="w-[450px] space-y-4">
       {error && <div className=""><p className='text-red-400 text-center font-bold'>{error}</p></div>}
         <h2 className=" text-slate-100 font-bold text-center text-3xl">Login</h2>

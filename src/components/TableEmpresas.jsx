@@ -1,27 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ButtonComponent from './ButtonComponent';
-import getEmpresas from '../services/apiService';
+import apiService from '../services/apiService';
+
 
 const TableEmpresas = () => {
   const [empresas, setEmpresas] = useState([]); // Estado para armazenar os usuários
   const [loading, setLoading] = useState(true); // Estado de carregamento
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limit] = useState(10);
+  const [totalPages, setTotalPages] = useState(1);
 
-  useEffect(() => {
-    // Função para buscar todos os usuários da API
-    const fetchUsers = async () => {
-      try {
-        const response = getEmpresas(); // Chama a função getUsers do apiService
-        setEmpresas(response.data); // Define os usuários no estado
-        setLoading(false); // Indica que terminou o carregamento
-      } catch (error) {
-        console.error('Erro ao buscar empresas:', error);
-        setLoading(false);
-      }
-    };
+const fetchEmpresas = async (page = 1) =>{
+  setLoading(true);
+  try{
+    const response = await apiService.getEmpresas(page,limit);
+    setEmpresas(response.data.results || response.data);
+    setTotalPages(Math.ceil(response.data.count / limit));
+  } catch(error){
+    console.error("Erro ao buscar empresas: ", error);
+  } finally{
+    setLoading(false);
+  }
+};
+-
+useEffect(()=>{
+  fetchEmpresas(currentPage);
+}, [currentPage]);
 
-    fetchUsers(); // Executa a busca ao montar o componente
-  }, []);
 
   return (
     <div className="space-y-4 p-6 bg-slate-600 rounded-md shadow flex flex-col text-white">
@@ -56,10 +62,10 @@ const TableEmpresas = () => {
                     {empresa.cnpj}
                   </td>
                   <td className="border text-center border-slate-700 hover:bg-slate-500">
-                    {empresa.endereço}
+                    {empresa.endereco}
                   </td>
                   <td className="border text-center border-slate-700">
-                    <Link to={`/editar_usuario/${user.id}`}>
+                    <Link to={`/editar_usuario/${empresa.id}`}>
                       <ButtonComponent nameButton="Editar" />
                     </Link>
                   </td>

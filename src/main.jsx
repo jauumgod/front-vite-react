@@ -1,10 +1,10 @@
 // src/main.jsx
-import React from 'react';
+import React, { useContext } from 'react';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './index.css';
-import { AppProvider } from './context/AppContext'; // Importe o AppProvider
+import AppContext, { AppProvider } from './context/AppContext'; // Importe o AppProvider
 import App from './App.jsx';
 import ListTickets from './pages/ListTickets.jsx';
 import CreateTicket from './pages/CreateTicket.jsx';
@@ -18,13 +18,16 @@ import NovoUsuario from './pages/NovoUsuario.jsx';
 import NovaEmpresa from './pages/NovaEmpresa.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 
+
+
 const router = createBrowserRouter([
+
   {
     path: '/',
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      { path: '/login', element: <LoginPage /> },
+      { path: '/login', element: <LoginPage/> },
       { path: '/home', element: <ProtectedRoute element={<HomePage />} /> },
       { path: '/novo', element: <ProtectedRoute element={<CreateTicket />} /> },
       { path: '/tickets', element: <ProtectedRoute element={<ListTickets />} /> },

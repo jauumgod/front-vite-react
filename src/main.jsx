@@ -19,12 +19,11 @@ import NovaEmpresa from './pages/NovaEmpresa.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 
-
 const router = createBrowserRouter([
 
   {
     path: '/',
-    element: <App />,
+    element: <App/>,
     errorElement: <ErrorPage />,
     children: [
       { path: '/login', element: <LoginPage/> },

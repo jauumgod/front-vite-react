@@ -6,6 +6,8 @@ import {
   Button,
 } from "@material-tailwind/react";
 import { TicketIcon } from "lucide-react";
+
+import { Link } from "react-router-dom";
  
 const  ComponentList=(props)=>{
   return (
@@ -22,7 +24,7 @@ const  ComponentList=(props)=>{
         </Typography>
       </CardBody>
       <CardFooter className="pt-0">
-        <a href="#" className="inline-block">
+        <Link to={props.route} className="inline-block">
           <Button size="sm" variant="text" className="flex items-center gap-2">
             Visualizar
             <svg
@@ -40,7 +42,7 @@ const  ComponentList=(props)=>{
               />
             </svg>
           </Button>
-        </a>
+        </Link>
       </CardFooter>
     </Card>
   );

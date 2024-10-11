@@ -57,9 +57,10 @@ const LoginPage = () => {
         />
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+          className="  flex justify-center w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
         >
-         {loading ? 'Carregando...' : `Login ${<MoveRight/>}`}
+         {loading ? 'Carregando...' : 'Login ' }
+         <MoveRight className='ml-4 ' />
         </button>
       </form>
     </div>

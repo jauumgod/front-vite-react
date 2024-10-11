@@ -1,5 +1,6 @@
 // src/services/authService.js
 import axios from 'axios';
+import {jwtDecode} from 'jwt-decode';
 
 const API_URL = 'http://127.0.0.1:8000/api'; // Base URL da API
 
@@ -37,24 +38,13 @@ const getToken = () => {
 
 const isAuthenticated = () => {
   const token = localStorage.getItem('token');
-  const tokenExpiration = localStorage.getItem('tokenExpiration');
+  if (!token) return false;
 
-  // Se não houver token ou data de expiração, o usuário não está autenticado
-  if (!token || !tokenExpiration) {
-    return false;
-  }
-
-  // Verifica se o token expirou
-  const currentDate = new Date();
-  const expirationDate = new Date(tokenExpiration);
-
-  if (currentDate > expirationDate) {
-    // Se o token expirou, o usuário não está autenticado
-    return false;
-  }
-
-  return true;
+  const decoded = jwtDecode(token);
+  const currentTime = Date.now() / 1000; // Hora atual em segundos
+  return decoded.exp > currentTime; // Retorna true se o token não estiver expirado
 };
+
 
 const logout = () => {
   localStorage.removeItem('token');

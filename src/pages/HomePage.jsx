@@ -7,25 +7,22 @@ import GraphComponent from '../components/GraphComponent';
 
 
 const HomePage = () => {
-
-  const [tickets, setTickets] = useState([]);
   const [totalTickets, setTotalTickets] = useState(0);
   const {isLoading, setIsLoading }= useContext(AppContext);
+  const [concluidos, setConcluidos] = useState(0);
 
-  
   const fetchTickets = () => {
     setIsLoading(true);
-
     apiService
-      .getTickets(tickets, totalTickets)
+      .getTickets(totalTickets)
       .then((response) => {
-        setTickets(response.data.results);
+ 
         setTotalTickets(response.data.count);
-        setIsLoading(false); // Atualiza para false após carregar os dados
+        setIsLoading(false); 
       })
       .catch((error) => {
         console.error('Erro ao buscar os tickets:', error);
-        setIsLoading(false); // Atualiza para false mesmo em caso de erro
+        setIsLoading(false);
       });
   };
 
@@ -43,9 +40,9 @@ const HomePage = () => {
       ) : (
     <div>
       <div className='flex space-x-4 justify-center mt-6'>
-          <ComponentList title={"Tickets Emitidos"} total={totalTickets}/>
+          <ComponentList route = "/tickets" title={"Tickets Emitidos"} total={totalTickets}/>
 
-          <ComponentList title={"Tickets Concluídos"} total={15}/>
+          <ComponentList title={"Tickets Concluídos"} total={concluidos}/>
 
           <ComponentList title={"Pendentes"} total={2}/>
       </div>

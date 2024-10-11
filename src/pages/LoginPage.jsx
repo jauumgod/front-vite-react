@@ -4,7 +4,7 @@ import authService from "../services/authService";
 import InputComponent from "../components/InputComponent";
 import AppContext from "../context/AppContext";
 import { MoveRight } from 'lucide-react';
-
+import { toast } from 'sonner';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -28,6 +28,7 @@ const LoginPage = () => {
     } catch (error) {
       setError(error.message);
       console.log(error.message);
+      toast.error('Falha ao efetuar login: ', error)
     } finally {
       setLoading(false);
     }
@@ -38,7 +39,6 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen w-full bg-slate-800 flex justify-center py-40">
       <form onSubmit={handleSubmit} className="w-[450px] space-y-4">
-      {error && <div className=""><p className='text-red-400 text-center font-bold'>{error}</p></div>}
         <h2 className=" text-slate-100 font-bold text-center text-3xl">Login</h2>
         <InputComponent
           type="text"

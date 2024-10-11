@@ -18,7 +18,7 @@ const isLoginPage = location.pathname === '/login';
 
       {!isLoginPage && <Navbar/>}
         <Outlet context={{user, setUser}}/>
-        <Toaster/>
+        <Toaster richColors  />
     </div>
   )
 }

@@ -36,8 +36,9 @@ const isAuthenticated = () => {
   const token = getToken();
   return !!token; // Retorna true se o token estiver presente, caso contrário, false
 };
+
 const getTickets = (operacao = '', sequencia = '', criacao = '', page = 1, limit = 5) => {
-  let url = `${API_URL}/tickets/?page=${page}&limit=${limit}`;
+  let url = `${API_URL}/tickets/?page=${page}&limit=${limit}`; // Adiciona o filtro concluido=false
   const params = [];
 
   if (operacao) params.push(`operacao=${operacao}`);
@@ -59,6 +60,21 @@ const getTickets = (operacao = '', sequencia = '', criacao = '', page = 1, limit
     },
   });
 };
+
+// Função para atualizar o status de um ticket
+const updateTicketStatus = (ticketId, data) => {
+  const token = getToken(); // Pega o token de autenticação
+  if (!token) {
+    return Promise.reject(new Error('Usuário não está autenticado'));
+  }
+
+  return axios.patch(`${API_URL}/tickets/${ticketId}`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 
 // Função para buscar um ticket por ID
 const getTicketById = (ticketId) => {
@@ -106,6 +122,21 @@ const getEmpresas = () => {
   });
 };
 
+const getStats = () =>{
+  const url = `${API_URL}/tickets/stats/`;
+
+  const token = authService.getToken();
+  if (!token) {
+    return Promise.reject(new Error('Usuário não está autenticado'));
+  }
+
+  return axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
 
 const authService = {
   login,
@@ -115,6 +146,8 @@ const authService = {
   getEmpresas,
   getTicketById,
   getTickets,
+  getStats,
+  updateTicketStatus,
 };
 
 export default authService;

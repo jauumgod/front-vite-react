@@ -1,9 +1,11 @@
 import React, {useContext,  useState, useEffect} from 'react';
 import withAuth from '../utils/withAuth';
 import apiService from '../services/apiService';
-import {AppContext} from "../context/AppContext";
+import {AppContext, useAppContext} from "../context/AppContext";
 import ComponentList from '../components/ComponentList';
 import GraphComponent from '../components/GraphComponent';
+
+
 
 
 const HomePage = () => {
@@ -11,12 +13,13 @@ const HomePage = () => {
   const {isLoading, setIsLoading }= useContext(AppContext);
   const [concluidos, setConcluidos] = useState(0);
 
+  const {totalConcluidos, setTotalConcluidos } = useAppContext();
+
   const fetchTickets = () => {
     setIsLoading(true);
     apiService
       .getTickets(totalTickets)
       .then((response) => {
- 
         setTotalTickets(response.data.count);
         setIsLoading(false); 
       })
@@ -29,6 +32,22 @@ const HomePage = () => {
   useEffect(() => {
     fetchTickets();
   }, []);
+
+  useEffect(()=>{
+    const fetchStats = async () =>{
+      try{
+        const response = await apiService.getStats();
+        const {monthly_stats} = response.data;
+        const total = monthly_stats.reduce((acc, curr) => acc + curr.concluidos, 0);
+        setTotalConcluidos(total);
+      }catch(error){
+        console.error("Erro ao buscar Stats: ", error)
+        toast.error("Erro ao buscar Stats");
+      }
+    };
+    fetchStats();
+  }, [setTotalConcluidos]);
+
   
   return (
     <div className="min-h-screen w-full bg-slate-800 flex flex-col py-4">
@@ -42,7 +61,7 @@ const HomePage = () => {
       <div className='flex space-x-4 justify-center mt-6'>
           <ComponentList route = "/tickets" title={"Tickets Emitidos"} total={totalTickets}/>
 
-          <ComponentList title={"Tickets Concluídos"} total={concluidos}/>
+          <ComponentList title={"Tickets Concluídos"} total={totalConcluidos}/>
 
           <ComponentList title={"Pendentes"} total={2}/>
       </div>

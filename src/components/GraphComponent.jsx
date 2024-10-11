@@ -1,29 +1,64 @@
+import { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import apiService from '../services/apiService';
 
+const GraphComponent = () => {
+  const [monthlyData, setMonthlyData] = useState([]);
+  const [dailyData, setDailyData] = useState([]);
+  const [viewType, setViewType] = useState('monthly'); // Alterna entre 'monthly' e 'daily'
 
+  const fetchDados = async () => {
+    try {
+      const response = await apiService.getStats(); // Aguarda a resposta da API
+      const { monthly_stats, daily_stats } = response.data;
 
-  
-const GraphComponent = (props) => {
-    const data = [
-      { name: 'Jan', Emitidos: 0, Concluídos: 0, amt: 2400 },
-      { name: 'Fev', Emitidos: 120, Concluídos: 110, amt: 2400 },
-      { name: 'Mar', Emitidos: 600, Concluídos: 500, amt: 2400 },
-      { name: 'Abr', Emitidos: 324, Concluídos: 240, amt: 2400 },
-      { name: 'Mai', Emitidos: 2400, Concluídos: 1400, amt: 2400 },
-      { name: 'Jun', Emitidos: 100, Concluídos: 400, amt: 2400 },
-      { name: 'Jul', Emitidos: 1400, Concluídos: 400, amt: 2400 },
-      { name: 'Ago', Emitidos: 100, Concluídos: 400, amt: 2400 },
-      { name: 'Set', Emitidos: 17, Concluídos: 15, amt: 2400 },
-      { name: 'Out', Emitidos: 100, Concluídos: 400, amt: 2400 },
-      { name: 'Nov', Emitidos: 400, Concluídos: 400, amt: 2400 },
-      { name: 'Dez', Emitidos: 150, Concluídos: 50, amt: 2400 },
-    ];
+      // Processando os dados mensais
+      const processedMonthlyData = monthly_stats.map((dado) => ({
+        month: new Date(dado.month).toLocaleString('pt-BR', { month: 'long' }), // Formata o mês
+        Emitidos: dado.emitidos,
+        Concluídos: dado.concluidos,
+        amt: 2400
+      }));
 
-    return (
-      <ResponsiveContainer width="50%" height={400}>
-        <LineChart data={data}>
+      // Processando os dados diários
+      const processedDailyData = daily_stats.map((dado) => ({
+        day: new Date(dado.day).toLocaleDateString('pt-BR'), // Formata o dia
+        Emitidos: dado.emitidos,
+        Concluídos: dado.concluidos,
+        amt: 2400
+      }));
+
+      setMonthlyData(processedMonthlyData);
+      setDailyData(processedDailyData);
+    } catch (error) {
+      console.error('Erro ao buscar Stats: ', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDados();
+  }, []);
+
+  // Escolhe qual dado exibir com base no estado 'viewType'
+  const dataToDisplay = viewType === 'monthly' ? monthlyData : dailyData;
+
+  return (
+    <div>
+      {/* Botões para alternar entre visualizações */}
+      <div className="flex justify-center mb-4">
+        <button onClick={() => setViewType('monthly')} className="px-4 py-2 bg-blue-500 text-white mr-2">
+          Ver Mensal
+        </button>
+        <button onClick={() => setViewType('daily')} className="px-4 py-2 bg-green-500 text-white">
+          Ver Diário
+        </button>
+      </div>
+
+      {/* Gráfico */}
+      <ResponsiveContainer width="100%" height={400}>
+        <LineChart data={dataToDisplay}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis dataKey={viewType === 'monthly' ? 'month' : 'day'} />
           <YAxis />
           <Tooltip />
           <Legend />
@@ -31,8 +66,8 @@ const GraphComponent = (props) => {
           <Line type="monotone" dataKey="Concluídos" stroke="#82ca9d" />
         </LineChart>
       </ResponsiveContainer>
-    );
-  };
-  
-  export default GraphComponent;
-  
+    </div>
+  );
+};
+
+export default GraphComponent;

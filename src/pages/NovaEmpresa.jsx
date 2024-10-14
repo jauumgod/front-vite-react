@@ -1,6 +1,6 @@
 import ButtonComponent from "../components/ButtonComponent";
 import InputComponent from "../components/InputComponent";
-
+import { toast } from 'sonner';
 
 
 const NovaEmpresa = () =>{

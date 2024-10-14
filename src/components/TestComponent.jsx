@@ -1,86 +1,85 @@
 import axios from 'axios';
-import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { AppContext } from '../context/AppContext';
 import { toast } from 'sonner';
 
-const FormTicket = () => {
-  const [placa, setPlaca] = useState('');
-  const [produto, setProduto] = useState('');
-  const [transportadora, setTransportadora] = useState('');
-  const [motorista, setMotorista] = useState('');
-  const [operador, setOperador] = useState('');
-  const [cliente, setCliente] = useState('');
-  const [pesoEntrada, setPesoEntrada] = useState(0);
-  const [pesoSaida, setPesoSaida] = useState(0);
-  const [pesoLiquido, setPesoLiquido] = useState(0);
-  const [loteLeira, setLoteLeira] = useState('');
-  const [umidade, setUmidade] = useState('');
-  const [isSend, setIsSend] = useState(false);
-  const handlePesoEntradaChange = (value) => {
-      setPesoEntrada(value);
-      setPesoLiquido(Math.abs(value - pesoSaida).toFixed(2));
-    };
-  
-  const handlePesoSaidaChange = (value) => {
-    setPesoSaida(value);
-    setPesoLiquido(Math.abs(pesoEntrada - value*1).toFixed(2));
-  };
-  
-  // Envia os dados do ticket para a API
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSend(true);
-
-    const token = localStorage.getItem('token');
-    if (!token) {
-      console.error('Usuário não está autenticado');
-      return;
-    }
-  
-  const ticketData = {
-    placa,
-    produto,
-    transportadora,
-    motorista,
-    operador,
-    cliente,
-    peso_entrada: pesoEntrada,
-    peso_saida: pesoSaida,
-    peso_liquido: pesoLiquido,
-    lote_leira: loteLeira,
-    umidade: umidade,
-    ticket_cancelado: false,
-  };
-  
-  axios.post('http://127.0.0.1:8000/api/tickets/', ticketData, {
-    headers: { Authorization: `Bearer ${token}` },
-  })
-    .then(response => {
-      console.log('Ticket criado com sucesso:', response.data);
-      toast.success('Ticket Criado com sucesso!');
-      //Inserir um navigate aqui para impressão do ticket!
-    })
-    .catch(error => {
-      if (error.response) {
-        console.error('Erro ao criar o ticket:', error.response.data);
-        toast.error('Erro ao criar o ticket!');
-      } else {
-        console.error('Erro ao criar o ticket:', error);
-        toast.error('Erro ao criar o ticket!');
-      }
-    });
-};
+const TestComponent = () => {
+    const [placa, setPlaca] = useState('');
+    const [produto, setProduto] = useState('');
+    const [transportadora, setTransportadora] = useState('');
+    const [motorista, setMotorista] = useState('');
+    const [operador, setOperador] = useState('');
+    const [cliente, setCliente] = useState('');
+    const [pesoEntrada, setPesoEntrada] = useState(0);
+    const [pesoSaida, setPesoSaida] = useState(0);
+    const [pesoLiquido, setPesoLiquido] = useState(0);
+    const [loteLeira, setLoteLeira] = useState('');
+    const [umidade, setUmidade] = useState('');
+    const [isSend, setIsSend] = useState(false);
+    const handlePesoEntradaChange = (value) => {
+        setPesoEntrada(value);
+        setPesoLiquido(Math.abs(value - pesoSaida).toFixed(2));
+      };
+    
+      const handlePesoSaidaChange = (value) => {
+        setPesoSaida(value);
+        setPesoLiquido(Math.abs(pesoEntrada - value*1).toFixed(2));
+      };
+    
+      // Envia os dados do ticket para a API
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        setIsSend(true);
+    
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.error('Usuário não está autenticado');
+          return;
+        }
+    
+        const ticketData = {
+          placa,
+          produto,
+          transportadora,
+          motorista,
+          operador,
+          cliente,
+          peso_entrada: pesoEntrada,
+          peso_saida: pesoSaida,
+          peso_liquido: pesoLiquido,
+          lote_leira: loteLeira,
+          umidade: umidade,
+          ticket_cancelado: false,
+        };
+    
+        axios.post('http://127.0.0.1:8000/api/tickets/', ticketData, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+          .then(response => {
+            console.log('Ticket criado com sucesso:', response.data);
+            toast.success('Ticket Criado com sucesso!');
+          })
+          .catch(error => {
+            if (error.response) {
+              console.error('Erro ao criar o ticket:', error.response.data);
+              toast.error('Erro ao criar o ticket!');
+            } else {
+              console.error('Erro ao criar o ticket:', error);
+              toast.error('Erro ao criar o ticket!');
+            }
+          });
+      };
 
 
   return (
     <section
     className="space-y-4 p-6 bg-slate-950 rounded-md shadow">
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <div>
             <label className="text-white dark:text-gray-200" htmlFor="username">Placa</label>
             <input
-                placeholder='Placa'
+                placeholder='XXXX-0000'
                 type="text" maxLength={8}
                 value={placa} onChange={(e) => setPlaca(e.target.value)}
                 required 
@@ -185,4 +184,4 @@ const FormTicket = () => {
   );
 };
 
-export default FormTicket;
+export default TestComponent;

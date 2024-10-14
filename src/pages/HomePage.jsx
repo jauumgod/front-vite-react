@@ -11,7 +11,7 @@ import GraphComponent from '../components/GraphComponent';
 const HomePage = () => {
   const [totalTickets, setTotalTickets] = useState(0);
   const {isLoading, setIsLoading }= useContext(AppContext);
-  const [concluidos, setConcluidos] = useState(0);
+  const [pendentes, setPendentes] = useState(0);
 
   const {totalConcluidos, setTotalConcluidos } = useAppContext();
 
@@ -29,8 +29,13 @@ const HomePage = () => {
       });
   };
 
+  const valorPendente = Math.abs(totalConcluidos - totalTickets);
+
+  
+
   useEffect(() => {
     fetchTickets();
+    
   }, []);
 
   useEffect(()=>{
@@ -48,6 +53,8 @@ const HomePage = () => {
     fetchStats();
   }, [setTotalConcluidos]);
 
+
+
   
   return (
     <div className="min-h-screen w-full bg-slate-800 flex flex-col py-4">
@@ -63,15 +70,11 @@ const HomePage = () => {
 
           <ComponentList title={"Tickets Concluídos"} total={totalConcluidos}/>
 
-          <ComponentList title={"Pendentes"} total={2}/>
+          <ComponentList title={"Pendentes"} total={valorPendente}/>
       </div>
-      <div className='flex space-x-4 justify-center mt-6'>
+      <div className='p-2 mb-2'>
         <GraphComponent/>
       </div>
- 
-
- 
-
     </div>
       )}
     </div>

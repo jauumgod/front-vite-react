@@ -1,9 +1,10 @@
 import React, { useState, useEffect} from 'react';
-import { toast } from "react-toastify";
+import { toast } from 'sonner';
 import userService from '../services/userService';
 import apiService from '../services/apiService';
 import ButtonComponent from "../components/ButtonComponent";
 import InputComponent from "../components/InputComponent";
+import { useNavigate } from 'react-router-dom';
 
 const NovoUsuario = () => {
   const [username, setUsername] = useState('');
@@ -13,6 +14,7 @@ const NovoUsuario = () => {
   const [error, setError] = useState('');
   const [empresas, setEmpresas] = useState([]);
 
+  const navigate = useNavigate();
 
   const fetchEmpresas = async () =>{
     try{
@@ -49,6 +51,7 @@ const NovoUsuario = () => {
         setPassword('');
         setRePassword('');
         setEmpresa('');
+        navigate("/config");
     } catch (error) {
       // Trata o erro retornado do serviço
       console.error("Erro na requisição:", error.response.data);

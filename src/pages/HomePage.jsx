@@ -72,7 +72,7 @@ const HomePage = () => {
 
           <ComponentList title={"Pendentes"} total={valorPendente}/>
       </div>
-      <div className='p-2 mb-2'>
+      <div className='mb-2 px-10 p-2'>
         <GraphComponent/>
       </div>
     </div>

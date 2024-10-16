@@ -24,7 +24,13 @@ const LoginPage = () => {
     try {
       const user = await authService.login(username, password);
       setUser(user);
-      navigate('/home'); // Redireciona para a rota '/dashboard' após login bem-sucedido
+      try{
+        navigate('/home');
+      }
+      catch(error){
+        console.log('erro ao navegar: ', error);
+      }
+
     } catch (error) {
       setError(error.message);
       console.log(error.message);

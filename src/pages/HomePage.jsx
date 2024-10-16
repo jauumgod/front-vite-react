@@ -4,6 +4,7 @@ import apiService from '../services/apiService';
 import {AppContext, useAppContext} from "../context/AppContext";
 import ComponentList from '../components/ComponentList';
 import GraphComponent from '../components/GraphComponent';
+import { toast } from 'sonner';
 
 
 
@@ -11,7 +12,6 @@ import GraphComponent from '../components/GraphComponent';
 const HomePage = () => {
   const [totalTickets, setTotalTickets] = useState(0);
   const {isLoading, setIsLoading }= useContext(AppContext);
-  const [pendentes, setPendentes] = useState(0);
 
   const {totalConcluidos, setTotalConcluidos } = useAppContext();
 

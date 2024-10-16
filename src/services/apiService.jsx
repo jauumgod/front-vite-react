@@ -1,41 +1,9 @@
 import axios from 'axios';
+import authService from './authService';
 
 const API_URL = 'http://127.0.0.1:8000/api'; // Base URL da API
 
-const login = async (username, password) => {
-  try {
-    const response = await axios.post(`${API_URL}/login/`, { username, password });
-    const { access, refresh, user_id, username: userUsername } = response.data;
 
-    const user = {
-      id: user_id,
-      username: userUsername,
-    };
-
-    localStorage.setItem('token', access);
-    localStorage.setItem('refreshToken', refresh);
-    localStorage.setItem('username', userUsername);
-
-    const expirationDate = new Date();
-    expirationDate.setDate(expirationDate.getDate() + 1);
-    localStorage.setItem('tokenExpiration', expirationDate.toISOString());
-
-    return user; // Retorna o usuário após o login
-  } catch (error) {
-    throw new Error(
-      error.response?.data?.detail || 'Erro ao fazer login, tente novamente.'
-    );
-  }
-};
-
-const getToken = () => {
-  return localStorage.getItem('token');
-};
-
-const isAuthenticated = () => {
-  const token = getToken();
-  return !!token; // Retorna true se o token estiver presente, caso contrário, false
-};
 
 const getTickets = (operacao = '', sequencia = '', criacao = '', page = 1, limit = 5) => {
   let url = `${API_URL}/tickets/?page=${page}&limit=${limit}`; // Adiciona o filtro concluido=false
@@ -63,7 +31,7 @@ const getTickets = (operacao = '', sequencia = '', criacao = '', page = 1, limit
 
 // Função para atualizar o status de um ticket
 const updateTicketStatus = (ticketId, data) => {
-  const token = getToken(); // Pega o token de autenticação
+  const token = authService.getToken(); // Pega o token de autenticação
   if (!token) {
     return Promise.reject(new Error('Usuário não está autenticado'));
   }
@@ -138,11 +106,8 @@ const getStats = () =>{
 }
 
 
-const authService = {
-  login,
-  getToken,
+const apiService = {
   getUsers,
-  isAuthenticated,
   getEmpresas,
   getTicketById,
   getTickets,
@@ -150,4 +115,4 @@ const authService = {
   updateTicketStatus,
 };
 
-export default authService;
+export default apiService;

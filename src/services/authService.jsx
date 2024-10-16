@@ -1,6 +1,7 @@
-// src/services/authService.js
+
 import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';
+
 
 const API_URL = 'http://127.0.0.1:8000/api'; // Base URL da API
 

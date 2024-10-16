@@ -4,7 +4,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './index.css';
-import AppContext, { AppProvider } from './context/AppContext'; // Importe o AppProvider
+import { AppProvider } from './context/AppContext'; // Importe o AppProvider
 import App from './App.jsx';
 import ListTickets from './pages/ListTickets.jsx';
 import CreateTicket from './pages/CreateTicket.jsx';
@@ -17,6 +17,7 @@ import Logout from './pages/Logout.jsx';
 import NovoUsuario from './pages/NovoUsuario.jsx';
 import NovaEmpresa from './pages/NovaEmpresa.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import EditarUsuario from './pages/EditarUsuario.jsx';
 
 
 const router = createBrowserRouter([
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
       { path: '/config', element: <ProtectedRoute element={<Configuracoes />} /> },
       { path: '/usuarios', element: <ProtectedRoute element={<NovoUsuario />} /> },
       { path: '/empresa', element: <ProtectedRoute element={<NovaEmpresa />} /> },
+      { path: '/editar_usuario/', element: <ProtectedRoute element={<EditarUsuario />} /> },
       { path: '/logout', element: <ProtectedRoute element={<Logout />} /> },
     ],
   },

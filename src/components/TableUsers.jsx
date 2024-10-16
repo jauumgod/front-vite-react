@@ -59,7 +59,7 @@ const TableUser = () => {
                   </td>
                 
                   <td className="border text-center border-slate-700 hover:bg-slate-500">
-                    {usuario.empresas.join(', ')}
+                    {usuario.empresas}
                   </td>
                   
                   <td className="border text-center border-slate-700">

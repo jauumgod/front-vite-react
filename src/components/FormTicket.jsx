@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 const FormTicket = () => {
@@ -16,6 +16,9 @@ const FormTicket = () => {
   const [loteLeira, setLoteLeira] = useState('');
   const [umidade, setUmidade] = useState('');
   const [isSend, setIsSend] = useState(false);
+
+  const navigate = useNavigate();
+
   const handlePesoEntradaChange = (value) => {
       setPesoEntrada(value);
       setPesoLiquido(Math.abs(value - pesoSaida).toFixed(2));
@@ -58,7 +61,9 @@ const FormTicket = () => {
     .then(response => {
       console.log('Ticket criado com sucesso:', response.data);
       toast.success('Ticket Criado com sucesso!');
-      //Inserir um navigate aqui para impressão do ticket!
+      const newTicketId = response.data.id;
+      console.log(newTicketId);
+      navigate('/print/', {state: {ticketId:newTicketId} });
     })
     .catch(error => {
       if (error.response) {

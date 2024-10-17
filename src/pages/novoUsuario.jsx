@@ -42,7 +42,7 @@ const NovoUsuario = () => {
   }, []); 
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Corrigido para invocar corretamente o preventDefault
+    e.preventDefault();
 
     // Validação das senhas
     if (password !== repassword) {
@@ -73,7 +73,7 @@ const NovoUsuario = () => {
       toast.error(error.response?.data?.error || 'Erro ao criar usuário');
     }
   };
-
+  
   return (
     <div className="min-h-screen w-full bg-slate-800 flex justify-center">
       <div className="w-[450px] space-y-4 pt-2 mt-4">
@@ -127,8 +127,8 @@ const NovoUsuario = () => {
           <div className="p-2 flex justify-center">
       <select
         className="p-2 rounded-md text-center"
-        value={selectedGroup} // Usar o estado `selectedGroup` para o valor selecionado
-        onChange={(e) => setSelectedGroup(e.target.value)} // Atualiza o valor selecionado
+        value={selectedGroup} 
+        onChange={(e) => setSelectedGroup(e.target.value)}
       >
         <option value="">Selecione um Grupo</option>
         {grupos.length > 0 ? (

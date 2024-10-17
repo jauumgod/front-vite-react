@@ -120,6 +120,27 @@ const getGrupos = () =>{
 };
 
 
+const uploadImage = async (nome, imagem, ticketId) =>{
+  const url = `${API_URL}/imagens/`;
+  const token = authService.getToken();
+
+  if (!token) {
+    return Promise.reject(new Error('Usuário não está autenticado'));
+  }
+
+  const formData = new FormData();
+
+  formData.append('nome', nome);
+  formData.append('imagem', imagem);
+  formData.append('ticketId', ticketId);
+
+  await axios.post(url, formData,{
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+};
 
 
 const apiService = {
@@ -129,6 +150,7 @@ const apiService = {
   getTickets,
   getStats,
   getGrupos,
+  uploadImage,
   updateTicketStatus,
 };
 

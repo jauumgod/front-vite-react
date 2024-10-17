@@ -12,7 +12,7 @@ const Configuracoes = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-slate-800 flex justify-center">
+    <div className=" bg-slate-800 justify-center px-10">
       <div className="space-y-6">
         <h2 className="text-slate-100 font-bold text-center text-3xl">Configurações</h2>
         <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">

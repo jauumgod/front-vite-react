@@ -16,7 +16,7 @@ const createUser = (username, password, empresa, grupos) => {
   const usuario = {
     username,
     password,
-    empresas: [empresa],
+    empresa: [empresa],
     grupos,
   };
 

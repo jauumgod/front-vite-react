@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import apiService from '../services/apiService';
-import './css/TicketPrint.css'; // Importa um arquivo CSS para estilização
+import './css/TicketPrint.css';
 import imagem from '../assets/logo-organics.png';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ChevronLeftIcon } from 'lucide-react';
+import ImageModal from '../components/ImageModal';
+import { toast } from 'sonner';
+
+
 
 const TicketPrint = () => {
   const [ticket, setTicket] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false); // Estado para controlar o modal
   const location = useLocation();
   const { ticketId } = location.state || {}; // Obtém o ticketId
-
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (ticketId) {
@@ -28,6 +32,45 @@ const TicketPrint = () => {
     window.print(); // Chama a função de impressão do navegador
   };
 
+  const openModal = () => {
+    setModalIsOpen(true);
+    <ImageModal open={open}/>
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+
+const generateImageName = () => {
+  // Gerando um nome aleatório baseado na data e número aleatório
+  const randomPart = Math.floor(Math.random() * 1000); // Gera um número aleatório entre 0 e 999
+  return `image_${Date.now()}_${randomPart}`; // Exemplo: image_1697530913913_123
+};
+
+const handleUpload = async (selectedImage) => {
+  try {
+    const nome = generateImageName(); 
+    const ticketId = ticket.id;  // O id do ticket que você já tem no estado
+    const success = await uploadImage(nome, selectedImage, ticketId);
+    toast.success('Imagem enviada com sucesso!');
+
+    if (success) {
+      toast.success('Imagem enviada com sucesso!');
+    } else {
+      toast.error('Falha ao enviar a imagem.');
+    }
+    
+    closeModal();  // Fecha o modal
+  } catch (error) {
+    console.error('Erro ao fazer upload da imagem:', error);
+    toast.error('Erro ao fazer upload da imagem.');  // Mensagem de erro
+  }
+};
+
+
+
+
   return (
     <div>
     <div>
@@ -43,7 +86,7 @@ const TicketPrint = () => {
         <h4 className="ticket-title">Endereço: {ticket.empresa.endereco}</h4>
         <div className="ticket-details">
           <div className="ticket-item">
-            <strong>Data de criação:</strong> <strong>{new Date(ticket.criacao).toLocaleDateString()}</strong>
+            <strong>Data de criação:</strong> <strong>{ticket.criacao}</strong>
           </div>
           <div className="ticket-item">
             <strong>Sequência:</strong> <span>{ticket.sequencia}</span>
@@ -99,9 +142,8 @@ const TicketPrint = () => {
         </div>
         <h4 className="ticket-title">Endereço: {ticket.empresa.endereco}</h4>
         <div className="ticket-details">
-          {/* Os mesmos itens de detalhes do ticket repetidos para segunda impressão */}
           <div className="ticket-item">
-            <strong>Data de criação:</strong> <strong>{new Date(ticket.criacao).toLocaleDateString()}</strong>
+            <strong>Data de criação:</strong> <strong>{ticket.criacao}</strong>
           </div>
           <div className="ticket-item">
             <strong>Sequência:</strong> <span>{ticket.sequencia}</span>
@@ -148,10 +190,13 @@ const TicketPrint = () => {
           </div>
         </div>
         <div className='flex'>
-          <button className="btn-print">Inserir Imagem</button>
+          <button className="btn-print" onClick={openModal}>Inserir Imagem</button>
           <button className="btn-green" onClick={handlePrint}>Imprimir Ticket</button>
         </div>
       </div>
+      {modalIsOpen && (
+          <ImageModal open={modalIsOpen} onClose={closeModal} onSave={handleUpload} />
+      )}
     </div>
   );
 };

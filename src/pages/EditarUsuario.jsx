@@ -1,16 +1,28 @@
 import { PersonStanding } from "lucide-react";
 import { useState } from "react";
-import { toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
+import apiService from "../services/apiService";
 
 
 const EditarUsuario = () =>{
-    const [userID, setUserId] = useState('');
+    const [usuario, setUsuario] = useState('');
     const [password, setPassword] = useState('');
     const [repassword, setRePassword] = useState('');
 
+    const location = useLocation();
+    const { usuarioId } = location.state || {};
 
-
-// Está faltando configurar o envio do ID do usuario é pegar ele nessa pagina aqui.
+    useEffect(() => {
+        if (usuarioId) {
+          apiService.getUsers(usuarioId)
+            .then(response => {
+              setUsuario(response.data);
+            })
+            .catch(error => console.error('Erro ao buscar ticket:', error));
+        }
+      }, [usuarioId]);
+    
+      if (!ticket) return <div>Carregando...</div>;
 
     const checkPassword = (password, repassword) =>{
         if(password == repassword){
@@ -34,7 +46,7 @@ const EditarUsuario = () =>{
                 <PersonStanding/>
             </div>
             <div>
-                <h3>Nome usuario</h3>
+                <h3>{usuario.nome}</h3>
             </div>
             <form onSubmit={handleSubmit}>
                 <div>

@@ -52,15 +52,8 @@ const handleUpload = async (selectedImage) => {
   try {
     const nome = generateImageName(); 
     const ticketId = ticket.id;  // O id do ticket que você já tem no estado
-    const success = await uploadImage(nome, selectedImage, ticketId);
+    const success = await apiService.uploadImage(nome, selectedImage, ticketId);
     toast.success('Imagem enviada com sucesso!');
-
-    if (success) {
-      toast.success('Imagem enviada com sucesso!');
-    } else {
-      toast.error('Falha ao enviar a imagem.');
-    }
-    
     closeModal();  // Fecha o modal
   } catch (error) {
     console.error('Erro ao fazer upload da imagem:', error);

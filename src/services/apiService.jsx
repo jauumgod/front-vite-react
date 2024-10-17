@@ -132,7 +132,7 @@ const uploadImage = async (nome, imagem, ticketId) =>{
 
   formData.append('nome', nome);
   formData.append('imagem', imagem);
-  formData.append('ticketId', ticketId);
+  formData.append('ticket', ticketId);
 
   await axios.post(url, formData,{
     headers: {
@@ -141,6 +141,21 @@ const uploadImage = async (nome, imagem, ticketId) =>{
   });
 
 };
+
+const getTicketsByUser = (page = 1) => {
+  const token = authService.getToken();
+  if (!token) {
+    return Promise.reject(new Error('Usuário não está autenticado'));
+  }
+
+  return axios.get(`${API_URL}/tickets/`, {
+    params: { page },
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 
 
 const apiService = {
@@ -152,6 +167,7 @@ const apiService = {
   getGrupos,
   uploadImage,
   updateTicketStatus,
+  getTicketsByUser,
 };
 
 export default apiService;

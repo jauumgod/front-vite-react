@@ -1,7 +1,4 @@
 import FormTicket from '../components/FormTicket.jsx'
-import 'react-toastify/dist/ReactToastify.css';
-
-
 
 
 

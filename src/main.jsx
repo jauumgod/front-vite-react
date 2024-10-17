@@ -18,6 +18,8 @@ import NovoUsuario from './pages/NovoUsuario.jsx';
 import NovaEmpresa from './pages/NovaEmpresa.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import EditarUsuario from './pages/EditarUsuario.jsx';
+import UserInfo from './pages/UserInfo.jsx';
+import MyTickets from './pages/MyTickets.jsx';
 
 
 const router = createBrowserRouter([
@@ -36,6 +38,8 @@ const router = createBrowserRouter([
       { path: '/usuarios', element: <ProtectedRoute element={<NovoUsuario />} /> },
       { path: '/empresa', element: <ProtectedRoute element={<NovaEmpresa />} /> },
       { path: '/editar_usuario/', element: <ProtectedRoute element={<EditarUsuario />} /> },
+      { path: '/userinfo/', element: <ProtectedRoute element={<UserInfo />} /> },
+      { path: '/mytickets/', element: <ProtectedRoute element={<MyTickets />} /> },
       { path: '/logout', element: <ProtectedRoute element={<Logout />} /> },
     ],
   },

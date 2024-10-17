@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Check, CircleMinus, Image, Printer } from 'lucide-react';
 import ButtonComponent from "../components/ButtonComponent";
 import H2Component from "../components/H2Component";
 import apiService from '../services/apiService';
 import withAuth from '../utils/withAuth';
-import { toast } from 'sonner';
 import SearchTickets from '../components/SearchTickets';
 
-const ListTickets = () => {
+const MyTickets = () => {
   const [tickets, setTickets] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,14 +14,15 @@ const ListTickets = () => {
 
   const fetchTickets = (page = currentPage) => {
     setIsLoading(true);
-    apiService.getTickets('', '', '', page)
+    apiService.getTicketsByUser(page)
       .then(response => {
         setTickets(response.data.results);
-        setTotalPages(Math.ceil(response.data.count / ticketsPerPage));  // Calcula o número total de páginas com base no total de resultados
+        setTotalPages(Math.ceil(response.data.count / ticketsPerPage)); // Calcula o número total de páginas com base no total de resultados
       })
       .catch(error => console.error('Erro ao buscar os tickets:', error))
       .finally(() => setIsLoading(false));
   };
+  
   
 
   useEffect(() => {
@@ -35,18 +33,6 @@ const ListTickets = () => {
     fetchTickets(1, searchTerm); // Reinicia a busca na primeira página
   };
 
-  // Função para alterar o status do ticket (concluído ou não)
-  const toggleCompleteStatus = async (ticketId, currentStatus) => {
-    try {
-      await apiService.updateTicketStatus(ticketId, { concluido: !currentStatus }); // Faz uma requisição PATCH
-      console.log(`status do ticket:  foi alterado ${ticketId}`);
-      fetchTickets(); // Recarrega os tickets após a atualização
-      toast.success(currentStatus ? 'Ticket marcado como não concluído!' : 'Ticket marcado como concluído!');
-    } catch (error) {
-      console.error('Erro ao atualizar o status do ticket:', error);
-      toast.error('Erro ao atualizar o status do ticket.');
-    }
-  };
 
 
   return (
@@ -61,7 +47,7 @@ const ListTickets = () => {
         </div>
       ) : (
        
-        <table className="border-separate border border-slate-500 py-3">
+        <table className="border-separate border border-slate-500 py-3 p-4">
           <thead>
             <tr>
               <th className="border border-slate-800 bg-slate-900">Nº Ticket</th>
@@ -71,7 +57,6 @@ const ListTickets = () => {
               <th className="border border-slate-800 bg-slate-900">Cliente</th>
               <th className="border border-slate-800 bg-slate-900">Peso Líquido</th>
               <th className="border border-slate-800 bg-slate-900">Lote Leira</th>
-              <th className="border border-slate-800 bg-slate-900">Opções</th>
             </tr>
           </thead>
           <tbody>
@@ -84,38 +69,6 @@ const ListTickets = () => {
                 <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.cliente}</td>
                 <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.peso_liquido}</td>
                 <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.criacao}</td>
-                <td className="border-slate-700 flex space-x-2">
-
-                  <div className="flex rounded-md bg-slate-200 p-2  text-gray-800">
-                    <button className="flex rounded-md bg-slate-200 p-2  text-gray-800">
-                      <Link to={"/print"} state={{ ticketId: ticket.id }}>
-                        <Printer className="text-blue-500" />
-                      </Link>
-                    </button>
-                  </div>
-                  <div className="flex rounded-md bg-slate-200 p-2  text-gray-800">
-                    <button className="flex rounded-md bg-slate-200 p-2 text-gray-800">
-                      <Link to={`/imagens/${ticket.id}`} state={{ ticketId: ticket.id }}>
-                        {
-                          ticket.imagens.length >= 1 ? (<Image className="text-green-500" />)
-                          :(<Image className="text-gray-400" />)
-                        }
-                      </Link>
-                    </button>
-                  </div>
-                  <div className="flex rounded-md bg-slate-200 p-2 text-gray-800">
-                  <button
-                    onClick={() => toggleCompleteStatus(ticket.id, ticket.concluido)}
-                    className="flex rounded-md bg-slate-200 p-2 text-gray-800"
-                  >
-                    {ticket.concluido ? (
-                      <Check className="text-green-500" />
-                    ) : (
-                      <CircleMinus className="text-red-500" />
-                    )}
-                  </button>
-                  </div>
-                </td>
               </tr>
             ))}
           </tbody>
@@ -140,4 +93,4 @@ const ListTickets = () => {
   );
 };
 
-export default withAuth(ListTickets);
+export default withAuth(MyTickets);

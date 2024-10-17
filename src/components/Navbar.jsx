@@ -11,6 +11,7 @@ const Navbar = () => {
   // Simulando a recuperação do ID do usuário do localStorage ou outra fonte
   useEffect(() => {
     const storedUserId = localStorage.getItem('grupo');  // Supondo que o ID do usuário esteja no localStorage
+    console.log(storedUserId);
     setGrupoUserId(parseInt(storedUserId));  // Armazenar o ID do usuário no estado
   }, []);
 
@@ -77,7 +78,7 @@ const Navbar = () => {
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-4">
                   {/* Exibir todas as rotas se o ID do usuário for diferente de 3 */}
-                  {grupoUserId !== 3 ? (
+                  {grupoUserId === 1 ||grupoUserId=== 2 ? (
                     <>
                       <Link
                         to="/home"
@@ -107,12 +108,20 @@ const Navbar = () => {
                     </>
                   ) : (
                     // Caso o ID seja 3, mostrar apenas uma rota
+                    <>
+                  <Link
+                    to="/novo"
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  >
+                    Novo Ticket
+                  </Link>
                     <Link
-                      to="/tickets"
+                      to="/mytickets/"
                       className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                     >
-                      Tickets
+                      Meus Tickets
                     </Link>
+                    </>
                   )}
                 </div>
               </div>
@@ -151,7 +160,7 @@ const Navbar = () => {
                   onClick={() => setShowMenu((prev) => !prev)}
                 >
                   <span className="sr-only">Open user menu</span>
-                  <CircleUser className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-300" />
+                  <CircleUser className="h-8 w-8 rounded-full text-gray-400 hover:text-gray-300" />
                 </button>
 
                 {/* Menu suspenso */}
@@ -165,7 +174,7 @@ const Navbar = () => {
                     <button
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                       role="menuitem"
-                      onClick={() => alert('Informações do Usuário')}
+                      onClick={() => navigate("/userinfo")}
                     >
                       Informações do Usuário
                     </button>

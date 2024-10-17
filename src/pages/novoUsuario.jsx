@@ -11,8 +11,10 @@ const NovoUsuario = () => {
   const [password, setPassword] = useState('');
   const [repassword, setRePassword] = useState('');
   const [empresa, setEmpresa] = useState('');
+  const [selectedGroup, setSelectedGroup] = useState('');
   const [error, setError] = useState('');
   const [empresas, setEmpresas] = useState([]);
+  const [grupos, setGrupos] = useState([]);
 
   const navigate = useNavigate();
 
@@ -25,8 +27,18 @@ const NovoUsuario = () => {
     }
   };
 
+  const fetchGrupos  = async () =>{
+    try{
+        const response = await apiService.getGrupos();
+        setGrupos(response.data.results || response.data);
+    } catch(error){
+      console.error("Erro ao buscar grupos: ", error);
+    }
+  };
+
   useEffect(()=>{
     fetchEmpresas();
+    fetchGrupos();
   }, []); 
 
   const handleSubmit = async (e) => {
@@ -44,13 +56,14 @@ const NovoUsuario = () => {
     try {
         
         // Chama o serviço para criar o usuário
-        const response = await userService.createUser(username, password, empresa);
+        const response = await userService.createUser(username, password, empresa, selectedGroup);
         console.log(response);
         toast.success('Usuário criado com sucesso!');
         setUsername('');
         setPassword('');
         setRePassword('');
         setEmpresa('');
+        setSelectedGroup('');
         navigate("/config");
     } catch (error) {
       // Trata o erro retornado do serviço
@@ -73,6 +86,7 @@ const NovoUsuario = () => {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              required={true}
             />
           </div>
           <div className="p-2">
@@ -81,6 +95,7 @@ const NovoUsuario = () => {
               placeholder="Digite a senha"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required={true}
             />
           </div>
           <div className="p-2">
@@ -89,6 +104,7 @@ const NovoUsuario = () => {
               placeholder="Repita a senha"
               value={repassword}
               onChange={(e) => setRePassword(e.target.value)}
+              required={true}
             />
           </div>
           <div className="p-2 flex justify-center">
@@ -105,8 +121,31 @@ const NovoUsuario = () => {
                     ): (
                         <option>Nenhuma empresa encontrada.</option>
                     )}
+                    required
             </select>
           </div>
+          <div className="p-2 flex justify-center">
+      <select
+        className="p-2 rounded-md text-center"
+        value={selectedGroup} // Usar o estado `selectedGroup` para o valor selecionado
+        onChange={(e) => setSelectedGroup(e.target.value)} // Atualiza o valor selecionado
+      >
+        <option value="">Selecione um Grupo</option>
+        {grupos.length > 0 ? (
+          grupos.map((grupo) => (
+            <option
+              className="rounded-md"
+              key={grupo.id}
+              value={grupo.id} // O valor será o ID do grupo
+            >
+              {grupo.nome} {/* Nome do grupo */}
+            </option>
+          ))
+        ) : (
+          <option>Nenhum grupo encontrado.</option>
+        )}
+      </select>
+    </div>
           <div className="p-2 text-center">
             <ButtonComponent type="submit" nameButton="Criar Usuário" />
           </div>

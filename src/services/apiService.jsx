@@ -103,7 +103,23 @@ const getStats = () =>{
       Authorization: `Bearer ${token}`,
     },
   });
-}
+};
+
+const getGrupos = () =>{
+  const url = `${API_URL}/grupos/`;
+  const token = authService.getToken();
+  if (!token) {
+    return Promise.reject(new Error('Usuário não está autenticado'));
+  }
+
+  return axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+
 
 
 const apiService = {
@@ -112,6 +128,7 @@ const apiService = {
   getTicketById,
   getTickets,
   getStats,
+  getGrupos,
   updateTicketStatus,
 };
 

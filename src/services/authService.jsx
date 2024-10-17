@@ -8,17 +8,18 @@ const API_URL = 'http://127.0.0.1:8000/api'; // Base URL da API
 const login = async (username, password) => {
   try {
     const response = await axios.post(`${API_URL}/login/`, { username, password });
-    const { access, refresh, user_id, username: userUsername } = response.data;
+    const { access, refresh, user_id, username: userUsername, grupo } = response.data;
 
     const user = {
       id: user_id,
       username: userUsername,
     };
-
+    console.log(response.data);
     // Salva o token e o refresh token no localStorage
     localStorage.setItem('token', access);
     localStorage.setItem('refreshToken', refresh);
     localStorage.setItem('username', userUsername);
+    localStorage.setItem('grupo', grupo);
 
     // Define a data de expiração para 1 dia após o login
     const expirationDate = new Date();
@@ -35,6 +36,10 @@ const login = async (username, password) => {
 
 const getToken = () => {
   return localStorage.getItem('token');
+};
+
+const getUserGroup = ()=>{
+  return localStorage.setItem('grupo');
 };
 
 const isAuthenticated = () => {
@@ -58,6 +63,7 @@ const authService = {
   login,
   getToken,
   isAuthenticated,
+  getUserGroup,
   logout, // Adiciona a função de logout
 };
 

@@ -1,9 +1,9 @@
 import axios from 'axios';
-import authService from './apiService';
+import authService from './authService';
 
 const API_URL = 'http://127.0.0.1:8000/api';
 
-const createUser = (username, password, empresa) => {
+const createUser = (username, password, empresa, grupos) => {
   const url = `${API_URL}/users/`;
   const token = authService.getToken();
 
@@ -17,6 +17,7 @@ const createUser = (username, password, empresa) => {
     username,
     password,
     empresas: [empresa],
+    grupos,
   };
 
   // Enviando os dados para a API

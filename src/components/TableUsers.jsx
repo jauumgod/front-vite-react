@@ -60,11 +60,9 @@ const TableUser = () => {
                   <td className="border text-center border-slate-700 hover:bg-slate-500">
                     {usuario.username}
                   </td>
-                
                   <td className="border text-center border-slate-700 hover:bg-slate-500">
-                    {usuario.empresas}
+                    {usuario.empresa}
                   </td>
-                  
                   <td className="border text-center border-slate-700">
                     <Link to={`/editar_usuario/${usuario.id}`} state={{ usuarioId: usuario.id }}>
                       <ButtonComponent nameButton="Editar" />

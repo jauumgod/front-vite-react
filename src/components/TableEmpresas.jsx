@@ -45,6 +45,7 @@ useEffect(()=>{
         <table className="border-separate border border-slate-500 py-3">
           <thead>
             <tr>
+            <th className="border border-slate-800 bg-slate-800">id</th>
               <th className="border border-slate-800 bg-slate-800">Empresa</th>
               <th className="border border-slate-800 bg-slate-800">CNPJ</th>
               <th className="border border-slate-800 bg-slate-800">Endereço</th>
@@ -55,6 +56,9 @@ useEffect(()=>{
             {empresas.length > 0 ? (
               empresas.map((empresa) => (
                 <tr key={empresa.id}>
+                  <td className="border text-center border-slate-700 hover:bg-slate-500">
+                    {empresa.id}
+                  </td>
                   <td className="border text-center border-slate-700 hover:bg-slate-500">
                     {empresa.nome}
                   </td>

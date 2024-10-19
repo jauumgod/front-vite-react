@@ -4,6 +4,8 @@ import H2Component from "../components/H2Component";
 import apiService from '../services/apiService';
 import withAuth from '../utils/withAuth';
 import SearchTickets from '../components/SearchTickets';
+import { Printer } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const MyTickets = () => {
   const [tickets, setTickets] = useState([]);
@@ -57,6 +59,7 @@ const MyTickets = () => {
               <th className="border border-slate-800 bg-slate-900">Cliente</th>
               <th className="border border-slate-800 bg-slate-900">Peso Líquido</th>
               <th className="border border-slate-800 bg-slate-900">Lote Leira</th>
+              <th className="border border-slate-800 bg-slate-900">Options</th>
             </tr>
           </thead>
           <tbody>
@@ -69,11 +72,21 @@ const MyTickets = () => {
                 <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.cliente}</td>
                 <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.peso_liquido}</td>
                 <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.criacao}</td>
+                <td>
+                <div className="rounded-md p-2 text-gray-800">
+                  <button className=" bg-slate-200 p-2 text-gray-800">
+                    <Link to={"/print"} state={{ ticketId: ticket.id }}>
+                      <Printer className="text-blue-500" />
+                    </Link>
+                  </button>
+                </div>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
+
 <div className="flex p-2 px-5 py-2 text-center justify-end">
   <div className="p-2">
     <ButtonComponent nameButton="Início" onClick={() => setCurrentPage(1)} disabled={currentPage === 1} />

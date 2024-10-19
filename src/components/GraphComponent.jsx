@@ -22,7 +22,7 @@ const GraphComponent = () => {
 
       // Processando os dados diários
       const processedDailyData = daily_stats.map((dado) => ({
-        day: new Date(dado.day).toLocaleDateString('pt-BR'), // Formata o dia
+        day: dado.day,
         Emitidos: dado.emitidos,
         Concluídos: dado.concluidos,
         amt: 2400

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 const FormTicket = () => {
@@ -49,10 +49,11 @@ const FormTicket = () => {
     cliente,
     peso_entrada: pesoEntrada,
     peso_saida: pesoSaida,
+    umidade: umidade,
     peso_liquido: pesoLiquido,
     lote_leira: loteLeira,
-    umidade: umidade,
     ticket_cancelado: false,
+    imagens: []
   };
   
   axios.post('http://127.0.0.1:8000/api/tickets/', ticketData, {

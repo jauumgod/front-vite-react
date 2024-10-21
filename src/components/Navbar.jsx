@@ -1,11 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { CircleUser } from "lucide-react";
+import { BellPlus, CircleUser } from "lucide-react";
 import LogoutUser from "./LogoutUser";
+import Notification from "./Notification";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
+  const [showNotify, setShowNotify] = useState(false);
   const [grupoUserId, setGrupoUserId] = useState(null);
 
   // Simulando a recuperação do ID do usuário do localStorage ou outra fonte
@@ -18,6 +20,8 @@ const Navbar = () => {
     LogoutUser();
     navigate('/logout');
   };
+
+  const URL_SEFAZ = "https://hom.nfe.fazenda.gov.br/portal/disponibilidade.aspx?versao=0.00&tipoConteudo=P2c98tUpxrI=&AspxAutoDetectCookieSupport=1";
 
   return (
     <div>
@@ -104,6 +108,12 @@ const Navbar = () => {
                       >
                         Configurações
                       </Link>
+                      <Link
+                        to={URL_SEFAZ}
+                        className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                      >
+                        Status Sefaz
+                      </Link>
                     </>
                   ) : (
                     // Caso o ID seja 3, mostrar apenas uma rota
@@ -120,6 +130,12 @@ const Navbar = () => {
                     >
                       Meus Tickets
                     </Link>
+                    <Link
+                      to={URL_SEFAZ}
+                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                    >
+                        Status Sefaz
+                    </Link>
                     </>
                   )}
                 </div>
@@ -127,28 +143,26 @@ const Navbar = () => {
             </div>
 
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-              <button
-                type="button"
-                className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-              >
-                <span className="absolute -inset-1.5"></span>
-                <span className="sr-only">View notifications</span>
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  aria-hidden="true"
+              <div
+              className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                <button
+                className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                onClick={()=>setShowNotify((prev)=> !prev)}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
-                  />
-                </svg>
-              </button>
-
+                <BellPlus/>
+                </button>
+                {
+                  showNotify &&(
+                    <div  
+                    className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="user-menu-button">
+                      <p className="text-black text-center">Notificação</p>
+                    </div>
+                  )}
+              </div>
+              
               <div className="relative inline-block text-left pl-2">
                 <button
                   type="button"
@@ -161,7 +175,6 @@ const Navbar = () => {
                   <span className="sr-only">Open user menu</span>
                   <CircleUser className="h-8 w-8 rounded-full text-gray-400 hover:text-gray-300" />
                 </button>
-
                 {/* Menu suspenso */}
                 {showMenu && (
                   <div

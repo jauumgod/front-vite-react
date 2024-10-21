@@ -19,24 +19,55 @@ const TicketTable = ({ tickets, toggleCompleteStatus }) => {
       </thead>
       <tbody>
         {tickets.map((ticket) => (
-          <tr key={ticket.id}>
-            <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.sequencia}</td>
-            <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.empresa.nome}</td>
-            <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.produto}</td>
-            <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.transportadora}</td>
-            <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.cliente}</td>
-            <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.peso_liquido}</td>
-            <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.criacao}</td>
+          <tr
+            key={ticket.id}
+            className={ticket.concluido ? "bg-slate-800" : "bg-red-500"}
+          >
+            <td
+              className={`border border-slate-700 text-center ${ticket.concluido ? 'hover:bg-slate-500' : 'hover:bg-red-700'}`}
+            >
+              {ticket.sequencia}
+            </td>
+            <td
+              className={`border border-slate-700 text-center ${ticket.concluido ? 'hover:bg-slate-500' : 'hover:bg-red-700'}`}
+            >
+              {ticket.empresa.nome}
+            </td>
+            <td
+              className={`border border-slate-700 text-center ${ticket.concluido ? 'hover:bg-slate-500' : 'hover:bg-red-700'}`}
+            >
+              {ticket.produto}
+            </td>
+            <td
+              className={`border border-slate-700 text-center ${ticket.concluido ? 'hover:bg-slate-500' : 'hover:bg-red-700'}`}
+            >
+              {ticket.transportadora}
+            </td>
+            <td
+              className={`border border-slate-700 text-center ${ticket.concluido ? 'hover:bg-slate-500' : 'hover:bg-red-700'}`}
+            >
+              {ticket.cliente}
+            </td>
+            <td
+              className={`border border-slate-700 text-center ${ticket.concluido ? 'hover:bg-slate-500' : 'hover:bg-red-700'}`}
+            >
+              {ticket.peso_liquido}
+            </td>
+            <td
+              className={`border border-slate-700 text-center ${ticket.concluido ? 'hover:bg-slate-500' : 'hover:bg-red-700'}`}
+            >
+              {ticket.criacao}
+            </td>
             <td className="border-slate-700 flex space-x-2">
               <div className="flex rounded-md bg-slate-200 p-2 text-gray-800">
-                <button >
+                <button>
                   <Link to={"/print"} state={{ ticketId: ticket.id }}>
                     <Printer className="text-blue-500" />
                   </Link>
                 </button>
               </div>
               <div className="flex rounded-md bg-slate-200 p-2 text-gray-800">
-                <button >
+                <button>
                   <Link to={`/imagens/${ticket.id}`} state={{ ticketId: ticket.id }}>
                     {ticket.imagens.length >= 1 ? (
                       <Image className="text-green-500" />

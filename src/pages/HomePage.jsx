@@ -15,6 +15,7 @@ const HomePage = () => {
   const [grupoUserId, setGrupoUserId] = useState(null);
 
   const {totalConcluidos, setTotalConcluidos } = useAppContext();
+  const [tempoMedio, setTempoMedio] = useState('');
 
   const fetchTickets = () => {
     setIsLoading(true);
@@ -61,6 +62,9 @@ const HomePage = () => {
   
   return (
     <div className="min-h-screen w-full bg-slate-800 flex flex-col py-4">
+        <div className='flex text-white ml-4 mt-2'>
+          Tempo médio de atendimento: {tempoMedio}
+        </div>
       {isLoading ? (
         <div className="flex justify-center items-center h-32">
           <div className="w-12 h-12 border-4 border-t-4 border-t-transparent border-white rounded-full animate-spin"></div>
@@ -69,9 +73,10 @@ const HomePage = () => {
       ) : (
     <div>
       <div className='flex space-x-4 justify-center mt-6'>
-        
+
         {grupoUserId === 1 ||grupoUserId=== 2 ? (
           <>
+
             <ComponentList route = "/tickets" title={"Tickets Emitidos"} total={totalTickets}/>
             <ComponentList title={"Tickets Concluídos"} total={totalConcluidos}/>
             <ComponentList title={"Pendentes"} total={valorPendente}/>

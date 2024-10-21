@@ -1,27 +1,30 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { BellPlus, CircleUser } from "lucide-react";
+import { useContext, useEffect, useState } from "react";
+import { Bell, BellDot, CircleUser } from "lucide-react";
 import LogoutUser from "./LogoutUser";
-import Notification from "./Notification";
+import AppContext from "../context/AppContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [showNotify, setShowNotify] = useState(false);
   const [grupoUserId, setGrupoUserId] = useState(null);
+  const notificacoes = useContext(AppContext).notificacoes;
+
 
   // Simulando a recuperação do ID do usuário do localStorage ou outra fonte
   useEffect(() => {
     const storedUserId = localStorage.getItem('grupo');
-    setGrupoUserId(parseInt(storedUserId));  
+    setGrupoUserId(parseInt(storedUserId));    
   }, []);
+
 
   const handleLogout = () => {
     LogoutUser();
     navigate('/logout');
   };
 
-  const URL_SEFAZ = "https://hom.nfe.fazenda.gov.br/portal/disponibilidade.aspx?versao=0.00&tipoConteudo=P2c98tUpxrI=&AspxAutoDetectCookieSupport=1";
+  const SEFAZ = 'https://www.nfe.fazenda.gov.br/portal/disponibilidade.aspx';
 
   return (
     <div>
@@ -37,7 +40,6 @@ const Navbar = () => {
                 aria-expanded="false"
               >
                 <span className="absolute -inset-0.5"></span>
-                <span className="sr-only">Open main menu</span>
                 <svg
                   className="block h-6 w-6"
                   fill="none"
@@ -109,7 +111,7 @@ const Navbar = () => {
                         Configurações
                       </Link>
                       <Link
-                        to={URL_SEFAZ}
+                        to={SEFAZ}
                         className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                       >
                         Status Sefaz
@@ -131,7 +133,7 @@ const Navbar = () => {
                       Meus Tickets
                     </Link>
                     <Link
-                      to={URL_SEFAZ}
+                      to={SEFAZ}
                       className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                     >
                         Status Sefaz
@@ -149,19 +151,31 @@ const Navbar = () => {
                 className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                 onClick={()=>setShowNotify((prev)=> !prev)}
                 >
-                <BellPlus/>
+                <BellDot/>
                 </button>
                 {
                   showNotify &&(
-                    <div  
-                    className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-labelledby="user-menu-button">
-                      <p className="text-black text-center">Notificação</p>
-                    </div>
-                  )}
-              </div>
+                <div
+                className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="user-menu-button"
+                  >
+                <p className="text-black text-center">Notificações</p>
+                {Array.isArray(notificacoes) && notificacoes.length === 0 ? (
+                    <p className="text-black text-center">Sem notificações</p>
+                ) : (
+                    notificacoes.map((notificacao, index) => (
+                        <div key={index} className="p-2 border-b">
+                            <p className="font-bold">{notificacao.titulo}</p>
+                            <p className="text-gray-600">{notificacao.empresa}</p>
+                        </div>
+                    ))
+                )}
+
+            </div>
+            )}
+          </div>
               
               <div className="relative inline-block text-left pl-2">
                 <button

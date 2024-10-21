@@ -183,7 +183,11 @@ const handleUpload = async (selectedImage) => {
           </div>
         </div>
         <div className='flex'>
-          <button className="btn-print" onClick={openModal}>Inserir Imagem</button>
+          {hasImage ? (
+            <button className="btn-print" onClick={openModal}>Inserir Imagem</button>
+          ): (
+            <button className="btn-print" onClick={openModal}>Inserir Imagem</button>
+          )}
           <button className="btn-green" onClick={handlePrint}>Imprimir Ticket</button>
         </div>
       </div>

@@ -11,8 +11,6 @@ export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [totalConcluidos, setTotalConcluidos] = useState(0);
   
-  // Estado para notificações
-  const [notifications, setNotifications] = useState([]);
 
   // Função de login
   const login = (userData) => setUser(userData);
@@ -21,14 +19,17 @@ export const AppProvider = ({ children }) => {
   const logout = () => setUser(null);
 
   // Função para adicionar notificação
-  const addNotification = (message, type) => {
-    setNotifications([...notifications, { message, type, id: Date.now() }]);
-  };
+  const [notificacoes, setNotificacoes] = useState([]);
 
-  // Função para remover notificação por id
+  const adicionarNotificacao = (titulo, empresa) => {
+    setNotificacoes(prev => [...prev, { id: Date.now(), titulo, empresa }]);
+};
+
+
   const removeNotification = (id) => {
-    setNotifications(notifications.filter(notification => notification.id !== id));
-  };
+    setNotificacoes(prev => prev.filter(notification => notification.id !== id));
+};
+
 
   return (
     <AppContext.Provider
@@ -43,8 +44,8 @@ export const AppProvider = ({ children }) => {
         logout,
         totalConcluidos,
         setTotalConcluidos,
-        notifications, // Expondo as notificações no contexto
-        addNotification, // Expondo a função de adicionar notificação
+        notificacoes, // Expondo as notificações no contexto
+        adicionarNotificacao, // Expondo a função de adicionar notificação
         removeNotification, // Expondo a função de remover notificação
       }}
     >

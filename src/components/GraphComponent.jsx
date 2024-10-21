@@ -45,13 +45,13 @@ const GraphComponent = () => {
       <div className="flex justify-center mb-4">
         <button
           onClick={() => setViewType('monthly')}
-          className={`px-4 py-2 ${viewType === 'monthly' ? 'bg-blue-700' : 'bg-blue-500'} text-white mr-2`}
+          className={`px-4 py-2 rounded-md  ${viewType === 'monthly' ? 'bg-blue-700' : 'bg-blue-500'} text-white mr-2`}
         >
           Ver Mensal
         </button>
         <button
           onClick={() => setViewType('daily')}
-          className={`px-4 py-2 ${viewType === 'daily' ? 'bg-green-700' : 'bg-green-500'} text-white`}
+          className={`px-4 py-2 rounded-md ${viewType === 'daily' ? 'bg-green-700' : 'bg-green-500'} text-white`}
         >
           Ver Diário
         </button>

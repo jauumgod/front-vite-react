@@ -1,7 +1,8 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import AppContext from '../context/AppContext';
 
 const FormTicket = () => {
   const [placa, setPlaca] = useState('');
@@ -17,6 +18,7 @@ const FormTicket = () => {
   const [umidade, setUmidade] = useState('');
   const [isSend, setIsSend] = useState(false);
 
+  const {notificacoes, adicionarNotificacao} = useContext(AppContext);
   const navigate = useNavigate();
 
   const handlePesoEntradaChange = (value) => {
@@ -62,6 +64,7 @@ const FormTicket = () => {
     .then(response => {
       console.log('Ticket criado com sucesso:', response.data);
       toast.success('Ticket Criado com sucesso!');
+      adicionarNotificacao(ticketData.titulo, ticketData.empresa);
       const newTicketId = response.data.id;
       console.log(newTicketId);
       navigate('/print/', {state: {ticketId:newTicketId} });

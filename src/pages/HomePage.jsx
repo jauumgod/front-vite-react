@@ -63,7 +63,7 @@ const HomePage = () => {
   return (
     <div className="min-h-screen w-full bg-slate-800 flex flex-col py-4">
         <div className='flex text-white ml-4 mt-2'>
-          Tempo médio de atendimento: {tempoMedio}
+          Tempo médio de atendimento: {tempoMedio} 12 minutos.
         </div>
       {isLoading ? (
         <div className="flex justify-center items-center h-32">

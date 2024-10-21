@@ -3,7 +3,7 @@ import ButtonComponent from "../components/ButtonComponent";
 import H2Component from "../components/H2Component";
 import apiService from '../services/apiService';
 import withAuth from '../utils/withAuth';
-import SearchTickets from '../components/SearchTickets';
+import SearchComponent from '../components/SearchComponent';
 import { Printer } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -40,7 +40,7 @@ const MyTickets = () => {
   return (
     <div className="min-h-screen w-full bg-slate-800 rounded-md shadow flex flex-col text-white">
       <div className='flex text-center justify-center space-x-5'>
-      <H2Component title="Tickets" /> <SearchTickets onSearch={handleSearch} />
+      <H2Component title="Tickets" /> <SearchComponent />
       </div>
       {isLoading ? (
         <div className="flex justify-center items-center h-32">

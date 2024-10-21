@@ -10,9 +10,8 @@ const Navbar = () => {
 
   // Simulando a recuperação do ID do usuário do localStorage ou outra fonte
   useEffect(() => {
-    const storedUserId = localStorage.getItem('grupo');  // Supondo que o ID do usuário esteja no localStorage
-    console.log(storedUserId);
-    setGrupoUserId(parseInt(storedUserId));  // Armazenar o ID do usuário no estado
+    const storedUserId = localStorage.getItem('grupo');
+    setGrupoUserId(parseInt(storedUserId));  
   }, []);
 
   const handleLogout = () => {

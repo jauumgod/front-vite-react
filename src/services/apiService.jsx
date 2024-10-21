@@ -156,6 +156,13 @@ const getTicketsByUser = (page = 1) => {
   });
 };
 
+const getFilteredTickets = async ({ searchTerm, startDate, endDate }) => {
+  const response = await fetch(`/api/tickets?search=${searchTerm}&start_date=${startDate}&end_date=${endDate}`);
+  if (!response.ok) {
+    throw new Error('Erro ao buscar tickets');
+  }
+  return await response.json();
+};
 
 
 const apiService = {
@@ -168,6 +175,7 @@ const apiService = {
   uploadImage,
   updateTicketStatus,
   getTicketsByUser,
+  getFilteredTickets,
 };
 
 export default apiService;

@@ -12,6 +12,7 @@ import { toast } from 'sonner';
 const HomePage = () => {
   const [totalTickets, setTotalTickets] = useState(0);
   const {isLoading, setIsLoading }= useContext(AppContext);
+  const [grupoUserId, setGrupoUserId] = useState(null);
 
   const {totalConcluidos, setTotalConcluidos } = useAppContext();
 
@@ -35,6 +36,8 @@ const HomePage = () => {
 
   useEffect(() => {
     fetchTickets();
+    const storedUserId = localStorage.getItem('grupo');
+    setGrupoUserId(parseInt(storedUserId));
     
   }, []);
 
@@ -66,11 +69,22 @@ const HomePage = () => {
       ) : (
     <div>
       <div className='flex space-x-4 justify-center mt-6'>
-          <ComponentList route = "/tickets" title={"Tickets Emitidos"} total={totalTickets}/>
-
-          <ComponentList title={"Tickets Concluídos"} total={totalConcluidos}/>
-
-          <ComponentList title={"Pendentes"} total={valorPendente}/>
+        
+        {grupoUserId === 1 ||grupoUserId=== 2 ? (
+          <>
+            <ComponentList route = "/tickets" title={"Tickets Emitidos"} total={totalTickets}/>
+            <ComponentList title={"Tickets Concluídos"} total={totalConcluidos}/>
+            <ComponentList title={"Pendentes"} total={valorPendente}/>
+          </>
+          ):(
+          <>
+            <ComponentList route = "/mytickets" title={"Tickets Emitidos"} total={totalTickets}/>
+            <ComponentList title={"Tickets Concluídos"} total={totalConcluidos}/>
+            <ComponentList title={"Pendentes"} total={valorPendente}/>
+          </>
+          )}
+        
+        
       </div>
       <div className='mb-2 px-10 p-2'>
         <GraphComponent/>

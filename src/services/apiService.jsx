@@ -156,14 +156,30 @@ const getTicketsByUser = (page = 1) => {
   });
 };
 
-const getFilteredTickets = async ({ searchTerm, startDate, endDate }) => {
-  const response = await fetch(`/api/tickets?search=${searchTerm}&start_date=${startDate}&end_date=${endDate}`);
-  if (!response.ok) {
+const getFilteredTickets = async ({ sequencia, startDate, endDate }) => {
+  const token = authService.getToken();
+  if (!token) {
+    return Promise.reject(new Error('Usuário não está autenticado'));
+  }
+
+  const params = new URLSearchParams();
+  if (sequencia) params.append('sequencia', sequencia);
+  if (startDate) params.append('start_date', startDate);
+  if (endDate) params.append('end_date', endDate);
+
+  try {
+    const response = await axios.get(`${API_URL}/tickets/?${params.toString()}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    return response.data; // Retorna os dados da resposta
+  } catch (error) {
+    console.error('Erro ao buscar tickets:', error);
     throw new Error('Erro ao buscar tickets');
   }
-  return await response.json();
 };
-
 
 const apiService = {
   getUsers,

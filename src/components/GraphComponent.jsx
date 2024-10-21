@@ -17,7 +17,6 @@ const GraphComponent = () => {
         month: new Date(dado.month).toLocaleString('pt-BR', { month: 'long' }), // Formata o mês
         Emitidos: dado.emitidos,
         Concluídos: dado.concluidos,
-        amt: 2400
       }));
 
       // Processando os dados diários
@@ -25,7 +24,6 @@ const GraphComponent = () => {
         day: dado.day,
         Emitidos: dado.emitidos,
         Concluídos: dado.concluidos,
-        amt: 2400
       }));
 
       setMonthlyData(processedMonthlyData);
@@ -44,12 +42,17 @@ const GraphComponent = () => {
 
   return (
     <div>
-      {/* Botões para alternar entre visualizações */}
       <div className="flex justify-center mb-4">
-        <button onClick={() => setViewType('monthly')} className="px-4 py-2 bg-blue-500 text-white mr-2">
+        <button
+          onClick={() => setViewType('monthly')}
+          className={`px-4 py-2 ${viewType === 'monthly' ? 'bg-blue-700' : 'bg-blue-500'} text-white mr-2`}
+        >
           Ver Mensal
         </button>
-        <button onClick={() => setViewType('daily')} className="px-4 py-2 bg-green-500 text-white">
+        <button
+          onClick={() => setViewType('daily')}
+          className={`px-4 py-2 ${viewType === 'daily' ? 'bg-green-700' : 'bg-green-500'} text-white`}
+        >
           Ver Diário
         </button>
       </div>

@@ -29,9 +29,10 @@ const ListTickets = () => {
     fetchTickets(currentPage);
   }, [currentPage]);
 
-  const handleSearch = ({ searchTerm, startDate, endDate }) => {
+  const handleSearch = ({ sequencia, startDate, endDate }) => {
     setIsLoading(true);
-    apiService.getFilteredTickets({ searchTerm, startDate, endDate })
+    console.log(sequencia, startDate, endDate);
+    apiService.getFilteredTickets({ sequencia, startDate, endDate })
       .then((data) => {
         setTickets(data.results);  // Atualiza os tickets com os resultados da busca
         setTotalPages(Math.ceil(data.count / ticketsPerPage));  // Atualiza o total de páginas
@@ -41,6 +42,8 @@ const ListTickets = () => {
       })
       .finally(() => setIsLoading(false)); // Remove o estado de carregamento
   };
+  
+  
 
   const toggleCompleteStatus = async (ticketId, currentStatus) => {
     try {

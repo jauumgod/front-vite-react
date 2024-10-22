@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import ButtonComponent from './ButtonComponent';
 import apiService from '../services/apiService';
 
-
 const TableEmpresas = () => {
   const [empresas, setEmpresas] = useState([]); // Estado para armazenar os usuários
   const [loading, setLoading] = useState(true); // Estado de carregamento
@@ -11,23 +10,29 @@ const TableEmpresas = () => {
   const [limit] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
 
-const fetchEmpresas = async (page = 1) =>{
-  setLoading(true);
-  try{
-    const response = await apiService.getEmpresas(page,limit);
-    setEmpresas(response.data.results || response.data);
-    setTotalPages(Math.ceil(response.data.count / limit));
-  } catch(error){
-    console.error("Erro ao buscar empresas: ", error);
-  } finally{
-    setLoading(false);
-  }
-};
--
-useEffect(()=>{
-  fetchEmpresas(currentPage);
-}, [currentPage]);
+  const fetchEmpresas = async (page = 1) => {
+    setLoading(true);
+    try {
+      const response = await apiService.getEmpresas(page, limit);
+      setEmpresas(response.data.results || response.data);
+      setTotalPages(Math.ceil(response.data.count / limit));
+    } catch (error) {
+      console.error("Erro ao buscar empresas: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
+    fetchEmpresas(currentPage);
+  }, [currentPage]);
+
+  // Funções para manipular a paginação
+  const goToPage = (page) => {
+    if (page > 0 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
 
   return (
     <div className="space-y-4 p-6 bg-slate-600 rounded-md shadow flex flex-col text-white">
@@ -45,7 +50,7 @@ useEffect(()=>{
         <table className="border-separate border border-slate-500 py-3">
           <thead>
             <tr>
-            <th className="border border-slate-800 bg-slate-800">id</th>
+              <th className="border border-slate-800 bg-slate-800">id</th>
               <th className="border border-slate-800 bg-slate-800">Empresa</th>
               <th className="border border-slate-800 bg-slate-800">CNPJ</th>
               <th className="border border-slate-800 bg-slate-800">Endereço</th>
@@ -77,7 +82,7 @@ useEffect(()=>{
               ))
             ) : (
               <tr>
-                <td colSpan="3" className="text-center border border-slate-700">
+                <td colSpan="5" className="text-center border border-slate-700">
                   Nenhuma empresa encontrada.
                 </td>
               </tr>
@@ -88,19 +93,19 @@ useEffect(()=>{
       
       <div className="flex p-2 px-5 py-2 text-center justify-end">
         <div className="p-2">
-          <ButtonComponent nameButton="Início" />
+          <ButtonComponent nameButton="Início" onClick={() => goToPage(1)} />
         </div>
+        {[...Array(totalPages)].map((_, index) => (
+          <div key={index} className="p-2">
+            <ButtonComponent 
+              nameButton={index + 1} 
+              onClick={() => goToPage(index + 1)} 
+              isActive={currentPage === index + 1} // Para aplicar estilo no botão ativo
+            />
+          </div>
+        ))}
         <div className="p-2">
-          <ButtonComponent nameButton="1" />
-        </div>
-        <div className="p-2">
-          <ButtonComponent nameButton="2" />
-        </div>
-        <div className="p-2">
-          <ButtonComponent nameButton="3" />
-        </div>
-        <div className="p-2">
-          <ButtonComponent nameButton="Fim" />
+          <ButtonComponent nameButton="Fim" onClick={() => goToPage(totalPages)} />
         </div>
       </div>
     </div>

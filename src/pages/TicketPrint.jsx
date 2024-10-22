@@ -14,6 +14,7 @@ const TicketPrint = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false); // Estado para controlar o modal
   const location = useLocation();
   const { ticketId } = location.state || {}; // Obtém o ticketId
+  const hasImage = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -183,10 +184,10 @@ const handleUpload = async (selectedImage) => {
           </div>
         </div>
         <div className='flex'>
-          {hasImage ? (
+          {hasImage? (
             <button className="btn-print" onClick={openModal}>Inserir Imagem</button>
           ): (
-            <button className="btn-print" onClick={openModal}>Inserir Imagem</button>
+            <button disabled className="btn-print" onClick={openModal}>Inserir Imagem</button>
           )}
           <button className="btn-green" onClick={handlePrint}>Imprimir Ticket</button>
         </div>

@@ -1,9 +1,13 @@
+import React from "react";
 
+const ButtonComponent = ({ nameButton, onClick, isActive }) => (
+    <button
+      onClick={onClick}
+      className={`rounded-md ${isActive ? 'bg-blue-700' : 'bg-blue-500'} hover:bg-blue-600 text-white px-4 py-2`}
+    >
+      {nameButton}
+    </button>
+  );
+  
 
-const ButtonComponent = (props) =>{
-    return(
-        <button type={props.type} onClick={props.onClick} className="bg-slate-500 text-white px-4 py-2 rounded-md font-bold hover:bg-slate-900">{props.nameButton}</button>
-    )
-}
-
-export default ButtonComponent;
+export default ButtonComponent

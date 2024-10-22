@@ -11,7 +11,6 @@ const createUser = (username, password, empresa, grupos) => {
   if (!token) {
     return Promise.reject(new Error('Usuário não autenticado.'));
   }
-
   // Definindo os dados do novo usuário
   const usuario = {
     username,
@@ -19,7 +18,6 @@ const createUser = (username, password, empresa, grupos) => {
     empresa: [empresa],
     grupos,
   };
-
   // Enviando os dados para a API
   return axios.post(url, usuario, {
     headers: {
@@ -28,6 +26,24 @@ const createUser = (username, password, empresa, grupos) => {
   });
 };
 
+const createEmpresa = (empresa, cnpj, endereco, cidade) =>{
+  const url = `${API_URL}/empresas/`;
+  const token = authService.getToken();
+
+  if (!token) {
+    return Promise.reject(new Error('Usuário não autenticado.'));
+  } 
+  const newEmpresa = {
+    empresa,cnpj, endereco, cidade,
+  };
+  return axios.post(url,newEmpresa,{
+    headers:{
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 export default {
   createUser,
+  createEmpresa,
 };

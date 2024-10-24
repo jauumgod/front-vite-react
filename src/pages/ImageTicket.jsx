@@ -5,14 +5,11 @@ import { useLocation } from "react-router-dom";
 
 
 
-
 const ImageTicket =() =>{
 
     const [imageData, setImageData] = useState(null);
     const location = useLocation();
     const { ticketId } = location.state || {}; 
-
-    console.log(ticketId);
 
     useEffect(()=>{
         if(ticketId){
@@ -21,9 +18,10 @@ const ImageTicket =() =>{
                 setImageData(response);
                 console.log(response);
             })
-            .catch(
-                error=> console.error('Erro ao buscar imagem: ', error));
-                toast.error('Erro ao buscar imagem.');
+            .catch(error => {
+              console.error('Erro ao buscar imagem: ', error);
+              toast.error('Erro ao buscar imagem.'); // Exibe toast apenas em caso de erro
+          });
         }
     }, [ticketId]);
 

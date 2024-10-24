@@ -191,7 +191,7 @@ const getImage = async (ticketId) =>{
     {
       headers: {
         'Authorization': `Bearer ${token}`,
-      }});
+    }});
 
     return response.data;
   }catch(error){
@@ -199,7 +199,39 @@ const getImage = async (ticketId) =>{
     throw error;
   }
   
-}
+};
+
+const uploadPdfFile = async (ticketId)=>{
+  const token = authService.getToken();
+  if (!token) {
+    return Promise.reject(new Error('Usuário não está autenticado'));
+  } 
+};
+
+
+const getUserById = async (userId) =>{
+  const token = authService.getToken();
+  if (!token) {
+    return Promise.reject(new Error('Usuário não está autenticado'));
+  }
+  try{
+    const response = await axios.get(`${API_URL}/users/${userId}`, 
+    {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+    }});
+
+    return response.data;
+  }catch(error){
+    console.error('Erro ao buscar usuário:', error);
+    throw error;
+  }
+  
+};
+
+const updatePassword = async (user,password) =>{
+
+};
 
 const apiService = {
   getUsers,
@@ -213,6 +245,8 @@ const apiService = {
   getTicketsByUser,
   getFilteredTickets,
   getImage,
+  uploadPdfFile,
+  getUserById,
 };
 
 export default apiService;

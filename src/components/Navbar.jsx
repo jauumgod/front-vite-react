@@ -116,6 +116,7 @@ const Navbar = () => {
                       >
                         Status Sefaz
                       </Link>
+
                     </>
                   ) : (
                     // Caso o ID seja 3, mostrar apenas uma rota

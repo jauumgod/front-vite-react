@@ -181,6 +181,26 @@ const getFilteredTickets = async ({ sequencia, startDate, endDate }) => {
   }
 };
 
+const getImage = async (ticketId) =>{
+  const token = authService.getToken();
+  if (!token) {
+    return Promise.reject(new Error('Usuário não está autenticado'));
+  }
+  try{
+    const response = await axios.get(`${API_URL}/imagens/${ticketId}/`, 
+    {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }});
+
+    return response.data;
+  }catch(error){
+    console.error('Erro ao buscar a imagem:', error);
+    throw error;
+  }
+  
+}
+
 const apiService = {
   getUsers,
   getEmpresas,
@@ -192,6 +212,7 @@ const apiService = {
   updateTicketStatus,
   getTicketsByUser,
   getFilteredTickets,
+  getImage,
 };
 
 export default apiService;

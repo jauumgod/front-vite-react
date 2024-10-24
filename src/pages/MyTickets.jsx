@@ -31,16 +31,25 @@ const MyTickets = () => {
     fetchTickets(currentPage);
   }, [currentPage]);
 
-  const handleSearch = (searchTerm) => {
-    fetchTickets(1, searchTerm); // Reinicia a busca na primeira página
+  const handleSearch = ({ sequencia, startDate, endDate }) => {
+    setIsLoading(true);
+    console.log(sequencia, startDate, endDate);
+    apiService.getFilteredTickets({ sequencia, startDate, endDate })
+      .then((data) => {
+        setTickets(data.results);  // Atualiza os tickets com os resultados da busca
+        setTotalPages(Math.ceil(data.count / ticketsPerPage));  // Atualiza o total de páginas
+      })
+      .catch((error) => {
+        console.error('Erro ao buscar tickets:', error);
+      })
+      .finally(() => setIsLoading(false)); // Remove o estado de carregamento
   };
-
 
 
   return (
     <div className="min-h-screen w-full bg-slate-800 rounded-md shadow flex flex-col text-white">
       <div className='flex text-center justify-center space-x-5'>
-      <H2Component title="Tickets" /> <SearchComponent />
+      <H2Component title="Tickets" /> <SearchComponent onSearch={handleSearch}/>
       </div>
       {isLoading ? (
         <div className="flex justify-center items-center h-32">

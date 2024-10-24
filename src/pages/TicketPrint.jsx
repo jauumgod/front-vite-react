@@ -115,6 +115,9 @@ const handleUpload = async (selectedImage) => {
           <div className="ticket-item">
             <strong>Peso Líquido:</strong> <span>{ticket.peso_liquido} Ton</span>
           </div>
+          <div className="ticket-item">
+            <strong>Lote Leira:</strong> <span>{ticket.lote_leira}</span>
+          </div>
           <div className="assinatura">
             <div className="assinatura-item">
               <strong>Assinatura Motorista:</strong>
@@ -171,6 +174,9 @@ const handleUpload = async (selectedImage) => {
           </div>
           <div className="ticket-item">
             <strong>Peso Líquido:</strong> <span>{ticket.peso_liquido} Ton</span>
+          </div>
+          <div className="ticket-item">
+            <strong>Lote Leira:</strong> <span>{ticket.lote_leira}</span>
           </div>
           <div className="assinatura">
             <div className="assinatura-item">

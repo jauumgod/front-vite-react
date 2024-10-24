@@ -20,6 +20,8 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 import EditarUsuario from './pages/EditarUsuario.jsx';
 import UserInfo from './pages/UserInfo.jsx';
 import MyTickets from './pages/MyTickets.jsx';
+import NotasFiscais from './pages/NotasFiscais.jsx';
+import ImageTicket from './pages/ImageTicket.jsx';
 
 
 const router = createBrowserRouter([
@@ -40,6 +42,8 @@ const router = createBrowserRouter([
       { path: '/editar_usuario/', element: <ProtectedRoute element={<EditarUsuario />} /> },
       { path: '/userinfo/', element: <ProtectedRoute element={<UserInfo />} /> },
       { path: '/mytickets/', element: <ProtectedRoute element={<MyTickets />} /> },
+      { path: '/baixarnf/', element: <ProtectedRoute element={<NotasFiscais />} /> },
+      { path: '/imagem', element: <ProtectedRoute element={<ImageTicket />} /> },
       { path: '/logout', element: <ProtectedRoute element={<Logout />} /> },
     ],
   },

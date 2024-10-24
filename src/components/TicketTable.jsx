@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Check, CircleMinus, Image, Printer } from 'lucide-react';
+import { ArrowDownToLine, Check, CircleMinus, FileUp, Image, Printer } from 'lucide-react';
 
 const TicketTable = ({ tickets, toggleCompleteStatus }) => {
   return (
@@ -58,7 +58,7 @@ const TicketTable = ({ tickets, toggleCompleteStatus }) => {
             >
               {ticket.criacao}
             </td>
-            <td className="border-slate-700 flex space-x-2">
+            <td className="border-slate-700 flex space-x-2 justify-center">
               <div className="flex rounded-md bg-slate-200 p-2 text-gray-800">
                 <button>
                   <Link to={"/print"} state={{ ticketId: ticket.id }}>
@@ -68,7 +68,7 @@ const TicketTable = ({ tickets, toggleCompleteStatus }) => {
               </div>
               <div className="flex rounded-md bg-slate-200 p-2 text-gray-800">
                 <button>
-                  <Link to={`/imagens/${ticket.id}`} state={{ ticketId: ticket.id }}>
+                <Link to={"/imagem"} state={{ ticketId: ticket.id }}>
                     {ticket.imagens.length >= 1 ? (
                       <Image className="text-green-500" />
                     ) : (
@@ -81,6 +81,20 @@ const TicketTable = ({ tickets, toggleCompleteStatus }) => {
                 <button onClick={() => toggleCompleteStatus(ticket.id, ticket.concluido)} className="flex rounded-md bg-slate-200 text-gray-800">
                   {ticket.concluido ? <Check className="text-green-500" /> : <CircleMinus className="text-red-500" />}
                 </button>
+              </div>
+              <div className="flex rounded-md bg-slate-200 p-2 text-gray-800">
+                    {ticket.nf ? 
+                      <button className="flex rounded-md bg-slate-200 text-gray-800">
+                        <FileUp className='text-blue-400'/>
+                      </button>: 
+                      <button>
+                        <Link to="/baixarnf" state={{ticketId: ticket.id}}>
+                          <ArrowDownToLine className='text-blue-400'/>
+                        </Link>
+                      </button>
+                    
+                    
+                 }
               </div>
             </td>
           </tr>

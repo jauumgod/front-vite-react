@@ -13,7 +13,8 @@ const TicketTable = ({ tickets, toggleCompleteStatus }) => {
           <th className="border border-slate-800 bg-slate-900">Transportadora</th>
           <th className="border border-slate-800 bg-slate-900">Cliente</th>
           <th className="border border-slate-800 bg-slate-900">Peso Líquido</th>
-          <th className="border border-slate-800 bg-slate-900">Lote Leira</th>
+          <th className="border border-slate-800 bg-slate-900">Data criação</th>
+          <th className="border border-slate-800 bg-slate-900">Lote</th>
           <th className="border border-slate-800 bg-slate-900">Opções</th>
         </tr>
       </thead>
@@ -58,6 +59,11 @@ const TicketTable = ({ tickets, toggleCompleteStatus }) => {
             >
               {ticket.criacao}
             </td>
+            <td
+              className={`border border-slate-700 text-center ${ticket.concluido ? 'hover:bg-slate-500' : 'hover:bg-red-700'}`}
+            >
+              {ticket.lote_leira}
+            </td>
             <td className="border-slate-700 flex space-x-2 justify-center">
               <div className="flex rounded-md bg-slate-200 p-2 text-gray-800">
                 <button>
@@ -83,19 +89,27 @@ const TicketTable = ({ tickets, toggleCompleteStatus }) => {
                 </button>
               </div>
               <div className="flex rounded-md bg-slate-200 p-2 text-gray-800">
-                    {ticket.nf ? 
-                      <button className="flex rounded-md bg-slate-200 text-gray-800">
-                        <FileUp className='text-blue-400'/>
-                      </button>: 
-                      <button>
-                        <Link to="/baixarnf" state={{ticketId: ticket.id}}>
-                          <ArrowDownToLine className='text-blue-400'/>
-                        </Link>
-                      </button>
-                    
-                    
-                 }
-              </div>
+                <button 
+                      className="flex rounded-md bg-slate-200 text-gray-800" 
+                      disabled // Aqui o botão será desabilitado
+                    >
+                      <FileUp className="text-gray-400" />
+                </button>
+                  {/* {ticket.nf ? (
+                    <button 
+                      className="flex rounded-md bg-slate-200 text-gray-800" 
+                      disabled // Aqui o botão será desabilitado
+                    >
+                      <FileUp className="text-blue-400" />
+                    </button>
+                  ) : (
+                    <button>
+                      <Link to="/baixarnf" state={{ ticketId: ticket.id }}>
+                        <ArrowDownToLine className="text-blue-400" />
+                      </Link>
+                    </button>
+                  )} */}
+                </div>
             </td>
           </tr>
         ))}

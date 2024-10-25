@@ -1,6 +1,7 @@
 .ticket-print-container {
-    border: 1px solid #ccc;
+    border: 1px solid black;
     border-radius: 8px;
+    font-size: 20px;
     padding: 20px;
     margin: 20px;
     background-color: #f9f9f9;
@@ -9,7 +10,7 @@
   
 .ticket-title {
     text-align: center;
-    color: #333;
+    color: black;
     margin-bottom: 20px;
   }
   
@@ -19,11 +20,11 @@
   
 .ticket-item {
     margin: 8px 0;
-    font-size: 16px;
+    font-size: 18px;
   }
   
 .ticket-item strong {
-    color: #555;
+    color: black;
   }
   
 .btn-print {

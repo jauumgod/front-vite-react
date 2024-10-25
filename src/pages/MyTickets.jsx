@@ -49,7 +49,10 @@ const MyTickets = () => {
   return (
     <div className="min-h-screen w-full bg-slate-800 rounded-md shadow flex flex-col text-white">
       <div className='flex text-center justify-center space-x-5'>
-      <H2Component title="Tickets" /> <SearchComponent onSearch={handleSearch}/>
+      <H2Component title="Tickets" />
+      </div>
+      <div className='flex text-center justify-center space-x-5'> 
+        <SearchComponent onSearch={handleSearch}/>
       </div>
       {isLoading ? (
         <div className="flex justify-center items-center h-32">

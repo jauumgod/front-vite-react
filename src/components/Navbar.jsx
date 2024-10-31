@@ -1,15 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { Bell, BellDot, CircleUser } from "lucide-react";
+import { BellDot, CircleUser } from "lucide-react";
 import LogoutUser from "./LogoutUser";
-import AppContext from "../context/AppContext";
+import { AppContext } from "../context/AppContext.jsx"
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [showNotify, setShowNotify] = useState(false);
   const [grupoUserId, setGrupoUserId] = useState(null);
-  const notificacoes = useContext(AppContext).notificacoes;
+  const { notificacoes, ticketCriado, setTicketCriado, adicionarNotificacao } = useContext(AppContext);
 
 
   // Simulando a recuperação do ID do usuário do localStorage ou outra fonte
@@ -152,7 +152,7 @@ const Navbar = () => {
                 className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                 onClick={()=>setShowNotify((prev)=> !prev)}
                 >
-                <BellDot/>
+                <BellDot/>{notificacoes.length}
                 </button>
                 {
                   showNotify &&(

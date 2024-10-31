@@ -31,10 +31,10 @@ const MyTickets = () => {
     fetchTickets(currentPage);
   }, [currentPage]);
 
-  const handleSearch = ({ sequencia, startDate, endDate }) => {
+  const handleSearch = ({ cliente, sequencia, startDate, endDate }) => {
     setIsLoading(true);
     console.log(sequencia, startDate, endDate);
-    apiService.getFilteredTickets({ sequencia, startDate, endDate })
+    apiService.getFilteredTickets({cliente, sequencia, startDate, endDate })
       .then((data) => {
         setTickets(data.results);  // Atualiza os tickets com os resultados da busca
         setTotalPages(Math.ceil(data.count / ticketsPerPage));  // Atualiza o total de páginas
@@ -71,6 +71,7 @@ const MyTickets = () => {
               <th className="border border-slate-800 bg-slate-900">Cliente</th>
               <th className="border border-slate-800 bg-slate-900">Peso Líquido</th>
               <th className="border border-slate-800 bg-slate-900">Lote Leira</th>
+              <th className="border border-slate-800 bg-slate-900">Data Criação</th>
               <th className="border border-slate-800 bg-slate-900">Options</th>
             </tr>
           </thead>
@@ -83,6 +84,7 @@ const MyTickets = () => {
                 <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.transportadora}</td>
                 <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.cliente}</td>
                 <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.peso_liquido}</td>
+                <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.lote_leira}</td>
                 <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.criacao}</td>
                 <td>
                 <div className="rounded-md p-2 text-gray-800">

@@ -29,10 +29,10 @@ const ListTickets = () => {
     fetchTickets(currentPage);
   }, [currentPage]);
 
-  const handleSearch = ({ sequencia, startDate, endDate }) => {
+  const handleSearch = ({ cliente ,sequencia, startDate, endDate }) => {
     setIsLoading(true);
-    console.log(sequencia, startDate, endDate);
-    apiService.getFilteredTickets({ sequencia, startDate, endDate })
+    console.log(cliente, sequencia, startDate, endDate);
+    apiService.getFilteredTickets({ cliente, sequencia, startDate, endDate })
       .then((data) => {
         setTickets(data.results);  // Atualiza os tickets com os resultados da busca
         setTotalPages(Math.ceil(data.count / ticketsPerPage));  // Atualiza o total de páginas
@@ -58,7 +58,8 @@ const ListTickets = () => {
 
   return (
     <div className="min-h-screen w-full bg-slate-800 rounded-md shadow flex flex-col text-white">
-      <h2 className="text-2xl font-bold text-center mb-4">Tickets</h2>
+      <h2 className="text-2xl font-bold text-center ">Tickets</h2>
+
       <div className='flex justify-center'>
         <SearchComponent onSearch={handleSearch} />
       </div>

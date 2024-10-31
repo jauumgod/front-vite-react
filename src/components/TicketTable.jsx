@@ -1,8 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowDownToLine, Check, CircleMinus, FileUp, Image, Printer } from 'lucide-react';
 
 const TicketTable = ({ tickets, toggleCompleteStatus }) => {
+  const navigate = useNavigate();
+
+  const handlePrintClick = (ticketId) => {
+    navigate('/print', { state: { ticketId } });
+  };
+
   return (
     <table className="border-separate border border-slate-500 py-3">
       <thead>
@@ -66,10 +72,8 @@ const TicketTable = ({ tickets, toggleCompleteStatus }) => {
             </td>
             <td className="border-slate-700 flex space-x-2 justify-center">
               <div className="flex rounded-md bg-slate-200 p-2 text-gray-800">
-                <button>
-                  <Link to={"/print"} state={{ ticketId: ticket.id }}>
-                    <Printer className="text-blue-500" />
-                  </Link>
+                <button onClick={() => handlePrintClick(ticket.id)}>
+                  <Printer className='text-blue-500'/>
                 </button>
               </div>
               <div className="flex rounded-md bg-slate-200 p-2 text-gray-800">
@@ -89,26 +93,27 @@ const TicketTable = ({ tickets, toggleCompleteStatus }) => {
                 </button>
               </div>
               <div className="flex rounded-md bg-slate-200 p-2 text-gray-800">
-                <button 
+                {/* <button 
                       className="flex rounded-md bg-slate-200 text-gray-800" 
-                      disabled // Aqui o botão será desabilitado
+                       // Aqui o botão será desabilitado
                     >
                       <FileUp className="text-gray-400" />
-                </button>
-                  {/* {ticket.nf ? (
-                    <button 
-                      className="flex rounded-md bg-slate-200 text-gray-800" 
-                      disabled // Aqui o botão será desabilitado
-                    >
-                      <FileUp className="text-blue-400" />
-                    </button>
-                  ) : (
+                </button> */}
+                  {ticket.nf ? (
                     <button>
-                      <Link to="/baixarnf" state={{ ticketId: ticket.id }}>
-                        <ArrowDownToLine className="text-blue-400" />
-                      </Link>
-                    </button>
-                  )} */}
+                    <Link to="/baixarnf" state={{ ticketId: ticket.id }}>
+                      <ArrowDownToLine className="text-blue-400" />
+                    </Link>
+                  </button>
+
+                  ) : (
+                  <button 
+                    className="flex rounded-md bg-slate-200 text-gray-800" 
+                    disabled // Aqui o botão será desabilitado
+                  >
+                    <FileUp className="text-blue-400" />
+                  </button>
+                  )}
                 </div>
             </td>
           </tr>

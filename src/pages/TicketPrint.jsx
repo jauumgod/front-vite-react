@@ -14,7 +14,7 @@ const TicketPrint = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false); // Estado para controlar o modal
   const location = useLocation();
   const { ticketId } = location.state || {}; // Obtém o ticketId
-  const hasImage = useState();
+  const [hasImage, setHasImage] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,6 +22,7 @@ const TicketPrint = () => {
       apiService.getTicketById(ticketId)
         .then(response => {
           setTicket(response.data);
+          setHasImage(!!response.data.imagens);
         })
         .catch(error => console.error('Erro ao buscar ticket:', error));
     }
@@ -56,6 +57,7 @@ const handleUpload = async (selectedImage) => {
     const success = await apiService.uploadImage(nome, selectedImage, ticketId);
     toast.success('Imagem enviada com sucesso!');
     closeModal();  // Fecha o modal
+    setHasImage(true);
   } catch (error) {
     console.error('Erro ao fazer upload da imagem:', error);
     toast.error('Erro ao fazer upload da imagem.');  // Mensagem de erro
@@ -192,8 +194,9 @@ const handleUpload = async (selectedImage) => {
         <div className='flex'>
           {hasImage? (
             <button className="btn-print" onClick={openModal}>Inserir Imagem</button>
+            
           ): (
-            <button disabled className="btn-print" onClick={openModal}>Inserir Imagem</button>
+            <span className="">Imagem já anexada</span>
           )}
           <button className="btn-green" onClick={handlePrint}>Imprimir Ticket</button>
         </div>

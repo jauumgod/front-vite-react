@@ -5,16 +5,26 @@ const SearchComponent = ({ onSearch }) => {
   const [sequencia, setSearchTerm] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [cliente, setCliente] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch({ sequencia, startDate, endDate });
+    onSearch({ cliente, sequencia, startDate, endDate });
   };
 
   return (
     <form onSubmit={handleSubmit}
     className="flex mb-4 text-black"
     >
+    <input
+    type="text"
+    placeholder="Cliente"
+    value={cliente}
+    onChange={(e) => setCliente(e.target.value)}
+    className="border rounded p-2 mr-2"
+  />
+
+
       <input
         type="text"
         placeholder="Pesquisar ticket"

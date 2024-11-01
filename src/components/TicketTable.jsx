@@ -1,13 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowDownToLine, Check, CircleMinus, FileUp, Image, Printer } from 'lucide-react';
+import { Modal } from 'antd';
+import apiService from '../services/apiService';
+import { toast } from 'sonner';
 
 const TicketTable = ({ tickets, toggleCompleteStatus }) => {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [fileselect, setFileSelect] = useState(null); // Mude para null
+  const [nfe, setNfe] = useState(''); // Certifique-se de que isso esteja definido
+  const [selectedTicketId, setSelectedTicketId] = useState(null);
 
   const handlePrintClick = (ticketId) => {
     navigate('/print', { state: { ticketId } });
   };
+
+  const showModal = (ticketId) => {
+    setSelectedTicketId(ticketId);
+    setIsModalOpen(true);
+  };
+  
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFileSelect(selectedFile); // Corrigido para usar setFileSelect
+    if (selectedFile) {
+      setNfe(selectedFile.name); // Define o nfe com base no nome do arquivo
+    }
+  };
+
+  const handleOk = () => {
+    if (fileselect && selectedTicketId) {
+      // Aqui você deve garantir que nfe é acessível
+      apiService.uploadNotaFiscal(nfe, fileselect, selectedTicketId) // Certifique-se de passar o nfe aqui
+        .then(response => {
+          console.log('Arquivo enviado com sucesso! ', response.data);
+          setIsModalOpen(false);
+          setFileSelect(null);
+          setNfe(''); // Limpa o campo nfe
+          toast.success('Arquivo Anexado com sucesso!');
+        })
+        .catch(error => {
+          console.error('Não foi possível anexar, ', error);
+        });
+    } else {
+      console.error("Arquivo ou ticket não selecionado");
+    }
+    setIsModalOpen(false);
+    console.log(nfe);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    setNfe(''); // Limpa o campo nfe
+    setFileSelect(null); // Limpa o campo de arquivo
+  };
+
+
 
   return (
     <table className="border-separate border border-slate-500 py-3">
@@ -78,7 +127,7 @@ const TicketTable = ({ tickets, toggleCompleteStatus }) => {
               </div>
               <div className="flex rounded-md bg-slate-200 p-2 text-gray-800">
                 <button>
-                <Link to={"/imagem"} state={{ ticketId: ticket.id }}>
+                  <Link to={"/imagem"} state={{ ticketId: ticket.id }}>
                     {ticket.imagens.length >= 1 ? (
                       <Image className="text-green-500" />
                     ) : (
@@ -89,35 +138,46 @@ const TicketTable = ({ tickets, toggleCompleteStatus }) => {
               </div>
               <div className="flex rounded-md bg-slate-200 p-2 text-gray-800">
                 <button onClick={() => toggleCompleteStatus(ticket.id, ticket.concluido)} className="flex rounded-md bg-slate-200 text-gray-800">
-                  {ticket.concluido ? <Check className="text-green-500" /> : <CircleMinus className="text-red-500" />}
+                  {ticket.concluido ? <Check className="text-green-500"/> : <CircleMinus className="text-red-500" />}
                 </button>
               </div>
               <div className="flex rounded-md bg-slate-200 p-2 text-gray-800">
-                {/* <button 
-                      className="flex rounded-md bg-slate-200 text-gray-800" 
-                       // Aqui o botão será desabilitado
-                    >
-                      <FileUp className="text-gray-400" />
-                </button> */}
-                  {ticket.nf ? (
-                    <button>
+                {ticket.nf >= 1 ? (
+                  <button>
                     <Link to="/baixarnf" state={{ ticketId: ticket.id }}>
-                      <ArrowDownToLine className="text-blue-400" />
+                      <ArrowDownToLine className="text-blue-400"/>
                     </Link>
                   </button>
-
-                  ) : (
+                ) : (
                   <button 
-                    className="flex rounded-md bg-slate-200 text-gray-800" 
-                    disabled // Aqui o botão será desabilitado
+                    className="flex rounded-md bg-slate-200 text-gray-800"
+                    onClick={() => showModal(ticket.id)} // Passando ticket.id
                   >
                     <FileUp className="text-blue-400" />
                   </button>
-                  )}
-                </div>
+                )}
+              </div>
             </td>
           </tr>
         ))}
+        <Modal
+          title="Inserir Nota Fiscal" 
+          open={isModalOpen} 
+          onOk={handleOk} 
+          onCancel={handleCancel}
+        >
+          <input 
+            type="text" 
+            placeholder="Título do arquivo" 
+            value={nfe} 
+            onChange={(e) => setNfe(e.target.value)} 
+          />
+          <input 
+            type="file" 
+            accept=".pdf"
+            onChange={handleFileChange} // Remover value={fileselect}
+          />
+        </Modal>
       </tbody>
     </table>
   );

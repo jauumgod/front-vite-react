@@ -7,12 +7,15 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import Pagination from '../components/Pagination';
 import SearchComponent from '../components/SearchComponent';
 
+
 const ListTickets = () => {
   const [tickets, setTickets] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [ticketsPerPage] = useState(5);
+
+
 
   const fetchTickets = (page = currentPage) => {
     setIsLoading(true);

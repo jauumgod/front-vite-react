@@ -202,12 +202,6 @@ const getImage = async (ticketId) =>{
   
 };
 
-const uploadPdfFile = async (ticketId)=>{
-  const token = authService.getToken();
-  if (!token) {
-    return Promise.reject(new Error('Usuário não está autenticado'));
-  } 
-};
 
 
 const getUserById = async (userId) =>{
@@ -230,8 +224,39 @@ const getUserById = async (userId) =>{
   
 };
 
+//TODO: create update password
 const updatePassword = async (user,password) =>{
 
+};
+
+
+const uploadNotaFiscal = async (nfe, file,ticketId) =>{
+  const token = authService.getToken();
+  if (!token) {
+    return Promise.reject(new Error('Usuário não está autenticado'));
+  }
+
+  const url = `${API_URL}/notas-fiscais/`;
+
+  const formData = new FormData();
+  formData.append('nfe', nfe);
+  formData.append('arquivo', file)
+  formData.append('ticket', ticketId);
+
+  console.log('api service retorno: ', formData);
+
+  try{
+    const response = await axios.post(url, formData,
+    {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+    }})
+    return response.data;
+}catch(error){
+  console.error('Erro ao buscar usuário:', error);
+  throw error;
+}
 };
 
 const apiService = {
@@ -246,8 +271,8 @@ const apiService = {
   getTicketsByUser,
   getFilteredTickets,
   getImage,
-  uploadPdfFile,
   getUserById,
+  uploadNotaFiscal,
 };
 
 export default apiService;

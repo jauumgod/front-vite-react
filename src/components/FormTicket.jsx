@@ -55,7 +55,8 @@ const FormTicket = () => {
     peso_liquido: pesoLiquido,
     lote_leira: loteLeira,
     ticket_cancelado: false,
-    imagens: []
+    imagens: [],
+    nf: [],
   };
   
   axios.post('http://127.0.0.1:8000/api/tickets/', ticketData, {

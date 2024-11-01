@@ -4,8 +4,9 @@ import H2Component from "../components/H2Component";
 import apiService from '../services/apiService';
 import withAuth from '../utils/withAuth';
 import SearchComponent from '../components/SearchComponent';
-import { Printer } from 'lucide-react';
+import { ArrowDownToLine, Printer } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { button } from '@material-tailwind/react';
 
 const MyTickets = () => {
   const [tickets, setTickets] = useState([]);
@@ -87,13 +88,19 @@ const MyTickets = () => {
                 <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.lote_leira}</td>
                 <td className="border border-slate-700 hover:bg-slate-500 text-center">{ticket.criacao}</td>
                 <td>
-                <div className="rounded-md p-2 text-gray-800">
+                <div className="rounded-md p-2 text-gray-800 space-x-2">
                   <button className=" bg-slate-200 p-2 text-gray-800">
                     <Link to={"/print"} state={{ ticketId: ticket.id }}>
                       <Printer className="text-blue-500" />
                     </Link>
                   </button>
-                </div>
+                {ticket.nf >= 1 ?
+                <button className=" bg-slate-200 p-2 text-gray-800">
+                    <Link to="/baixarnf" state={{ ticketId: ticket.id }}>
+                      <ArrowDownToLine className="text-green-500"/>
+                    </Link>
+                </button> : <button  className='bg-slate-200 p-2 text-gray-800'><ArrowDownToLine className="text-slate-400 "/></button>}
+              </div>
                 </td>
               </tr>
             ))}

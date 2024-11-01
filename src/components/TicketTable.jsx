@@ -12,7 +12,9 @@ const TicketTable = ({ tickets, toggleCompleteStatus }) => {
   const [nfe, setNfe] = useState(''); // Certifique-se de que isso esteja definido
   const [selectedTicketId, setSelectedTicketId] = useState(null);
 
-  const handlePrintClick = (ticketId) => {
+
+
+    const handlePrintClick = (ticketId) => {
     navigate('/print', { state: { ticketId } });
   };
 
@@ -20,7 +22,7 @@ const TicketTable = ({ tickets, toggleCompleteStatus }) => {
     setSelectedTicketId(ticketId);
     setIsModalOpen(true);
   };
-  
+
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setFileSelect(selectedFile); // Corrigido para usar setFileSelect
@@ -28,13 +30,21 @@ const TicketTable = ({ tickets, toggleCompleteStatus }) => {
       setNfe(selectedFile.name); // Define o nfe com base no nome do arquivo
     }
   };
-
+  
+  
   const handleOk = () => {
     if (fileselect && selectedTicketId) {
       // Aqui você deve garantir que nfe é acessível
       apiService.uploadNotaFiscal(nfe, fileselect, selectedTicketId) // Certifique-se de passar o nfe aqui
         .then(response => {
           console.log('Arquivo enviado com sucesso! ', response.data);
+
+          tickets.forEach(ticket => {
+            if (ticket.id === selectedTicketId) {
+              ticket.nf = (ticket.nf || 0) + 1; // Incrementa a nota fiscal
+            }
+          });
+          
           setIsModalOpen(false);
           setFileSelect(null);
           setNfe(''); // Limpa o campo nfe

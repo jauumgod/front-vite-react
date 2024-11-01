@@ -74,6 +74,16 @@ const getUsers = () => {
   });
 };
 
+const createTicket = () =>{
+  const url = `${API_URL}/tickets/`;
+
+  const token = authService.getToken();
+  if (!token) {
+    return Promise.reject(new Error('Usuário não está autenticado'));
+  }
+
+}
+
 // Função para buscar empresas
 const getEmpresas = () => {
   const url = `${API_URL}/empresas/`;
@@ -202,6 +212,25 @@ const getImage = async (ticketId) =>{
   
 };
 
+const getNotaFiscal = async (ticketId)=>{
+  const token = authService.getToken();
+  if (!token) {
+    return Promise.reject(new Error('Usuário não está autenticado'));
+  }
+  try{
+    const response = await axios.get(`${API_URL}/notas-fiscais/${ticketId}/`, 
+    {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+    }});
+
+    return response.data;
+  }catch(error){
+    console.error('Erro ao buscar a nota fiscal:', error);
+    throw error;
+  }
+};
+
 
 
 const getUserById = async (userId) =>{
@@ -273,6 +302,8 @@ const apiService = {
   getImage,
   getUserById,
   uploadNotaFiscal,
+  getNotaFiscal,
+  createTicket,
 };
 
 export default apiService;

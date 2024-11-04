@@ -22,6 +22,7 @@ import UserInfo from './pages/UserInfo.jsx';
 import MyTickets from './pages/MyTickets.jsx';
 import NotasFiscais from './pages/NotasFiscais.jsx';
 import ImageTicket from './pages/ImageTicket.jsx';
+import EntregaDiaria from './pages/EntregaDiaria.jsx';
 
 
 const router = createBrowserRouter([
@@ -44,6 +45,7 @@ const router = createBrowserRouter([
       { path: '/mytickets/', element: <ProtectedRoute element={<MyTickets />} /> },
       { path: '/baixarnf/', element: <ProtectedRoute element={<NotasFiscais />} /> },
       { path: '/imagem', element: <ProtectedRoute element={<ImageTicket />} /> },
+      { path: '/entregas', element: <ProtectedRoute element={<EntregaDiaria />} /> },
       { path: '/logout', element: <ProtectedRoute element={<Logout />} /> },
     ],
   },

@@ -61,7 +61,7 @@ const ListTickets = () => {
 
   return (
     <div className="min-h-screen w-full bg-slate-800 rounded-md shadow flex flex-col text-white">
-      <h2 className="text-2xl font-bold text-center ">Tickets</h2>
+      <h2 className="text-3xl font-bold text-center mb-5 ">Tickets</h2>
 
       <div className='flex justify-center'>
         <SearchComponent onSearch={handleSearch} />

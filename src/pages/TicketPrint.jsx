@@ -11,10 +11,11 @@ import { toast } from 'sonner';
 
 const TicketPrint = () => {
   const [ticket, setTicket] = useState(null);
-  const [modalIsOpen, setModalIsOpen] = useState(false); // Estado para controlar o modal
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [hasImage, setHasImage] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
-  const { ticketId } = location.state || {}; // Obtém o ticketId
-  const [hasImage, setHasImage] = useState(true);
+  const { ticketId } = location.state || {};
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,7 +23,7 @@ const TicketPrint = () => {
       apiService.getTicketById(ticketId)
         .then(response => {
           setTicket(response.data);
-          setHasImage(!!response.data.imagens);
+          setHasImage(response.data.imagens && response.data.imagens.length > 0);
         })
         .catch(error => console.error('Erro ao buscar ticket:', error));
     }
@@ -31,47 +32,46 @@ const TicketPrint = () => {
   if (!ticket) return <div>Carregando...</div>;
 
   const handlePrint = () => {
-    window.print(); // Chama a função de impressão do navegador
+    window.print();
   };
 
   const openModal = () => {
     setModalIsOpen(true);
-    <ImageModal open={open}/>
   };
 
   const closeModal = () => {
     setModalIsOpen(false);
   };
 
+  const generateImageName = () => {
+    const randomPart = Math.floor(Math.random() * 1000);
+    return `image_${Date.now()}_${randomPart}`;
+  };
 
-const generateImageName = () => {
-  // Gerando um nome aleatório baseado na data e número aleatório
-  const randomPart = Math.floor(Math.random() * 1000); // Gera um número aleatório entre 0 e 999
-  return `image_${Date.now()}_${randomPart}`; // Exemplo: image_1697530913913_123
-};
-
-const handleUpload = async (selectedImage) => {
-  try {
-    const nome = generateImageName(); 
-    const ticketId = ticket.id;  // O id do ticket que você já tem no estado
-    const success = await apiService.uploadImage(nome, selectedImage, ticketId);
-    toast.success('Imagem enviada com sucesso!');
-    closeModal();  // Fecha o modal
-    setHasImage(true);
-  } catch (error) {
-    console.error('Erro ao fazer upload da imagem:', error);
-    toast.error('Erro ao fazer upload da imagem.');  // Mensagem de erro
-  }
-};
+  const handleUpload = async (selectedImage) => {
+    setIsLoading(true); // Inicia o loading
+    try {
+      const nome = generateImageName();
+      const success = await apiService.uploadImage(nome, selectedImage, ticket.id);
+      toast.success('Imagem enviada com sucesso!');
+      closeModal();
+      setHasImage(true); // Atualiza o estado para indicar que agora existe uma imagem
+    } catch (error) {
+      console.error('Erro ao fazer upload da imagem:', error);
+      toast.error('Erro ao fazer upload da imagem.');
+    } finally {
+      setIsLoading(false); // Finaliza o loading
+    }
+  };
 
 
 
 
   return (
     <div>
-    <div>
-      <button onClick={()=> navigate(-1)} className='bg-slate-100 rounded-md py-1 px-2'>
-        <ChevronLeftIcon/>
+    <div className='flex-row space-x-1'>
+      <button onClick={()=> navigate(-1)} className="bg-slate-300 text-center text-slate-900 border rounded-md mt-2 ml-2 flex">
+        <ChevronLeftIcon/> Voltar
       </button>
     </div>
       <div className="ticket-print-container">
@@ -119,6 +119,9 @@ const handleUpload = async (selectedImage) => {
           </div>
           <div className="ticket-item">
             <strong>Lote Leira:</strong> <span>{ticket.lote_leira}</span>
+          </div>
+          <div className="ticket-item">
+            <strong>Umidade:</strong> <span>{ticket.umidade}</span>
           </div>
           <div className="assinatura">
             <div className="assinatura-item">
@@ -180,6 +183,9 @@ const handleUpload = async (selectedImage) => {
           <div className="ticket-item">
             <strong>Lote Leira:</strong> <span>{ticket.lote_leira}</span>
           </div>
+          <div className="ticket-item">
+            <strong>Umidade:</strong> <span>{ticket.umidade}</span>
+          </div>
           <div className="assinatura">
             <div className="assinatura-item">
               <strong>Assinatura Motorista:</strong>
@@ -192,11 +198,12 @@ const handleUpload = async (selectedImage) => {
           </div>
         </div>
         <div className='flex'>
-          {hasImage? (
-            <button className="btn-print" onClick={openModal}>Inserir Imagem</button>
-            
-          ): (
-            <span className="">Imagem já anexada</span>
+          {hasImage ? (
+            <span disabled className="btn-cinza">imagem anexada</span>
+          ) : (
+            <button className="btn-print" onClick={openModal} disabled={isLoading}>
+              Inserir Imagem
+            </button>
           )}
           <button className="btn-green" onClick={handlePrint}>Imprimir Ticket</button>
         </div>

@@ -1,12 +1,13 @@
 import axios from 'axios';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import AppContext from '../context/AppContext';
+import apiService from '../services/apiService';
 
 const FormTicket = () => {
   const [placa, setPlaca] = useState('');
-  const [produto, setProduto] = useState('');
+  const [produtos, setProdutos] = useState([]);
   const [transportadora, setTransportadora] = useState('');
   const [motorista, setMotorista] = useState('');
   const [operador, setOperador] = useState('');
@@ -17,9 +18,24 @@ const FormTicket = () => {
   const [loteLeira, setLoteLeira] = useState('');
   const [umidade, setUmidade] = useState('');
   const [isSend, setIsSend] = useState(false);
+  const [produtoSelected, setProdutoSelected] = useState('');
 
   const {notificacoes, adicionarNotificacao} = useContext(AppContext);
   const navigate = useNavigate();
+
+  const fetchProdutos = async () =>{
+    try{
+      const response = await apiService.getProdutos();
+      console.log(response.data);
+      setProdutos(response.data.results);
+    }
+    catch(error){
+      console.error('Erro ao buscar produtos', error);
+    }
+  }
+  useEffect(()=>{
+    fetchProdutos();
+  }, []);
 
   const handlePesoEntradaChange = (value) => {
       setPesoEntrada(value);
@@ -44,7 +60,7 @@ const FormTicket = () => {
   
   const ticketData = {
     placa,
-    produto,
+    produto: produtoSelected,
     transportadora,
     motorista,
     operador,
@@ -99,15 +115,21 @@ const FormTicket = () => {
             </div>
 
             <div>
-            <label className="text-white dark:text-gray-200" >Produto</label>
-            <input
-                placeholder='Produto'
-                type='text'
-                value={produto} onChange={(e) => setProduto(e.target.value)}
-                required
-                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-            />
-            </div>
+      <label className="text-white dark:text-gray-200">Produto</label>
+      <select
+        value={produtoSelected}
+        onChange={(e) => setProdutoSelected(e.target.value)}
+        required
+        className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+      >
+        <option value="" disabled>Selecione um produto</option>
+        {produtos.map((produto) => (
+          <option key={produto.id} value={produto.id}>
+            {produto.nome}
+          </option>
+        ))}
+      </select>
+    </div>
 
             <div>
             <label className="text-white dark:text-gray-200">Transportadora</label>

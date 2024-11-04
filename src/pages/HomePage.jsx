@@ -3,8 +3,13 @@ import withAuth from '../utils/withAuth';
 import apiService from '../services/apiService';
 import {AppContext, useAppContext} from "../context/AppContext";
 import ComponentList from '../components/ComponentList';
-import GraphComponent from '../components/GraphComponent';
+import GraphComponent from '../utils/GraphComponent';
 import { toast } from 'sonner';
+import Charts from '../utils/Charts';
+import BarChart from '../utils/BarChart';
+import RadarChart from '../utils/RadarChart';
+import PieChart from '../utils/PieChart';
+import LiquidChart from '../utils/LiquidChart';
 
 
 
@@ -61,10 +66,7 @@ const HomePage = () => {
 
   
   return (
-    <div className="min-h-screen w-full bg-slate-800 flex flex-col py-4">
-        <div className='flex text-white ml-4 mt-2'>
-          Tempo médio de atendimento: {tempoMedio} 0 minutos.
-        </div>
+    <div className="min-h-screen w-full bg-slate-800 flex flex-col py-4 mt-5">
       {isLoading ? (
         <div className="flex justify-center items-center h-32">
           <div className="w-12 h-12 border-4 border-t-4 border-t-transparent border-white rounded-full animate-spin"></div>
@@ -72,7 +74,7 @@ const HomePage = () => {
         </div>
       ) : (
     <div>
-      <div className='flex space-x-4 justify-center mt-6'>
+      <div className='flex space-x-14 justify-center mt-2 mb-4'>
 
         {grupoUserId === 1 ||grupoUserId=== 2 ? (
           <>
@@ -91,9 +93,19 @@ const HomePage = () => {
         
         
       </div>
-      <div className='mb-2 px-10 p-2'>
-        <GraphComponent/>
+      <div className="grid grid-cols-3 gap-2 mt-2 m-2">
+        <div>
+          {/* <GraphComponent /> */}
+          <LiquidChart/>
+        </div>
+        <div>
+          <PieChart/>
+        </div>
+        <div>
+          <BarChart />
+        </div>
       </div>
+
     </div>
       )}
     </div>

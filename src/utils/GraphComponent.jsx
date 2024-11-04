@@ -57,18 +57,19 @@ const GraphComponent = () => {
         </button>
       </div>
 
-      {/* Gráfico */}
+    <div className="border mt-2 rounded-md bg-slate-700 text-white">
       <ResponsiveContainer width="100%" height={400}>
-        <LineChart data={dataToDisplay}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey={viewType === 'monthly' ? 'month' : 'day'} />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="Emitidos" stroke="#8884d8" activeDot={{ r: 8 }} />
-          <Line type="monotone" dataKey="Concluídos" stroke="#82ca9d" />
-        </LineChart>
-      </ResponsiveContainer>
+          <LineChart data={dataToDisplay}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey={viewType === 'monthly' ? 'month' : 'day'} />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="Emitidos" stroke="#8884d8" activeDot={{ r: 8 }} />
+            <Line type="monotone" dataKey="Concluídos" stroke="#82ca9d" />
+          </LineChart>
+        </ResponsiveContainer>
+    </div>
     </div>
   );
 };

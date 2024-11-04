@@ -115,6 +115,21 @@ const getStats = () =>{
   });
 };
 
+const getProdutos = () =>{
+  const url = `${API_URL}/produtos/`;
+
+  const token = authService.getToken();
+  if (!token) {
+    return Promise.reject(new Error('Usuário não está autenticado'));
+  }
+
+  return axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
 const getGrupos = () =>{
   const url = `${API_URL}/grupos/`;
   const token = authService.getToken();
@@ -198,7 +213,7 @@ const getImage = async (ticketId) =>{
     return Promise.reject(new Error('Usuário não está autenticado'));
   }
   try{
-    const response = await axios.get(`${API_URL}/imagens/${ticketId}/`, 
+    const response = await axios.get(`${API_URL}/imagens/ticket/${ticketId}/`, 
     {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -294,6 +309,7 @@ const apiService = {
   getTicketById,
   getTickets,
   getStats,
+  getProdutos,
   getGrupos,
   uploadImage,
   updateTicketStatus,
@@ -304,6 +320,7 @@ const apiService = {
   uploadNotaFiscal,
   getNotaFiscal,
   createTicket,
+
 };
 
 export default apiService;

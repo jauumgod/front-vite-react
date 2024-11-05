@@ -25,7 +25,7 @@ const NotasFiscais = () => {
 
     const handleDownload = () => {
         if (notafiscal && notafiscal.arquivo) {
-            window.open(notafiscal.arquivo, '_blank');
+            window.open(notafiscal.pdf_url, '_blank');
         }
     };
 
@@ -58,3 +58,4 @@ const NotasFiscais = () => {
 }
 
 export default NotasFiscais;
+

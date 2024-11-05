@@ -48,7 +48,7 @@ const MyTickets = () => {
 
 
   return (
-    <div className="min-h-screen w-full bg-slate-800 rounded-md shadow flex flex-col text-white">
+    <div className="min-h-screen w-full bg-slate-800 rounded-md shadow flex flex-col text-white mt-20">
       <div className='flex text-center justify-center space-x-5'>
       <H2Component title="Tickets" />
       </div>

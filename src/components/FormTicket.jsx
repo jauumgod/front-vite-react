@@ -186,21 +186,24 @@ const FormTicket = () => {
           <input
           className="block w-full px-4 py-2 mt-2  text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
           placeholder="Peso Líquido" type="text"
-            value={pesoLiquido} readOnly={true} />
+          required
+          value={pesoLiquido} readOnly={true} />
         </div>
         <div>
         <label className="text-white dark:text-gray-200">Umidade</label>
           <input
          className="block w-full px-4 py-2 mt-2  text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
           placeholder="Umidade" type="text"
-            value={umidade} onChange={(e) => setUmidade(e.target.value)} required={true} />
+          required
+          value={umidade} onChange={(e) => setUmidade(e.target.value)}/>
         </div>
         <div>
         <label className="text-white dark:text-gray-200">Lote (Identificação Leira)</label>
           <input
           className="block w-full px-4 py-2 mt-2  text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
           placeholder="Lote Leira" type="text"
-            value={loteLeira} onChange={(e) => setLoteLeira(e.target.value)} />
+          required
+          value={loteLeira} onChange={(e) => setLoteLeira(e.target.value)} />
         </div>
         </div>
         <div className='p-2 text-center'>

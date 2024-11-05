@@ -102,7 +102,7 @@ const HomePage = () => {
           <PieChart/>
         </div>
         <div>
-          <BarChart />
+          <RadarChart />
         </div>
       </div>
 

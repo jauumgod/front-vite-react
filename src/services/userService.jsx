@@ -1,7 +1,7 @@
 import axios from 'axios';
 import authService from './authService';
 
-const API_URL = 'http://127.0.0.1:8000/api';
+const API_URL = 'http://10.1.1.3:8090/api';
 
 const createUser = (username, password, empresa, grupos) => {
   const url = `${API_URL}/users/`;

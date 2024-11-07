@@ -13,7 +13,7 @@ const Navbar = () => {
   const [grupoUserId, setGrupoUserId] = useState(null);
   const { notificacoes } = useContext(AppContext);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("Entregas");
+
 
   useEffect(() => {
     const storedUserId = localStorage.getItem('grupo');
@@ -22,10 +22,6 @@ const Navbar = () => {
 
   const toggleDropdown = () => setIsOpen(prev => !prev);
 
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    setIsOpen(false);
-  };
 
   const handleLogout = () => {
     LogoutUser();
@@ -52,27 +48,7 @@ const Navbar = () => {
                   {grupoUserId === 1 || grupoUserId === 2 ? (
                     <>
                       <Link to="/home" className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">Dashboard</Link>
-                      <div className="relative inline-block text-left">
-                        <div onClick={toggleDropdown} className="cursor-pointer rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white hover:bg-gray-800">
-                          {selectedOption}
-                        </div>
-                        {isOpen && (
-                          <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-                            <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                              {["Nova Entrega", "Entregas"].map((option) => (
-                                <div
-                                  key={option}
-                                  onClick={() => handleOptionClick(option)}
-                                  className="block px-4 py-2 text-gray-800 hover:bg-blue-100 w-full text-left cursor-pointer"
-                                  role="menuitem"
-                                >
-                                  <Link to="/entregas">{option}</Link>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
+                      <Link to="/meta" className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">Meta Diária</Link>
                       <Link to="/tickets" className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Tickets</Link>
                       <Link to="/config" className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Configurações</Link>
                       <Link to={SEFAZ} className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Status Sefaz</Link>

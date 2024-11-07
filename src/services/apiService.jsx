@@ -1,7 +1,7 @@
 import axios from 'axios';
 import authService from './authService';
 
-const API_URL = 'http://127.0.0.1:8000/api'; // Base URL da API
+const API_URL = 'http://10.1.1.3:8090/api'; // Base URL da API
 
 
 
@@ -246,8 +246,6 @@ const getNotaFiscal = async (ticketId)=>{
   }
 };
 
-
-
 const getUserById = async (userId) =>{
   const token = authService.getToken();
   if (!token) {
@@ -267,6 +265,27 @@ const getUserById = async (userId) =>{
   }
   
 };
+
+const getMetas = async () =>{
+  const token = authService.getToken();
+  if (!token) {
+    return Promise.reject(new Error('Usuário não está autenticado'));
+  }
+  try{
+    const response = await axios.get(`${API_URL}/metas/`, 
+    {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+    }});
+
+    return response.data;
+  }catch(error){
+    console.error('Erro ao buscar usuário:', error);
+    throw error;
+  }
+  
+
+}
 
 //TODO: create update password
 const updatePassword = async (user,password) =>{
@@ -303,8 +322,29 @@ const uploadNotaFiscal = async (nfe, file,ticketId) =>{
 }
 };
 
+const insertMetas = (vlMeta, sttMeta)=>{
+  const token = authService.getToken();
+  if (!token) {
+    return Promise.reject(new Error('Usuário não está autenticado'));
+  }
+
+  const url = `${API_URL}/metas/`;
+  
+  const newMeta = {
+    vlMeta: vlMeta, sttMeta: sttMeta,
+  };
+  return axios.post(url, newMeta,{
+    headers:{
+      Authorization:`Bearer ${token}`,
+    }
+  }); 
+};
+
+
+
 const apiService = {
   getUsers,
+  getMetas,
   getEmpresas,
   getTicketById,
   getTickets,
@@ -320,6 +360,7 @@ const apiService = {
   uploadNotaFiscal,
   getNotaFiscal,
   createTicket,
+  insertMetas,
 
 };
 

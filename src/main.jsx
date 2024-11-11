@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './index.css';
 import { AppProvider } from './context/AppContext'; // Importe o AppProvider
 import App from './App.jsx';

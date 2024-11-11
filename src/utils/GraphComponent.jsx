@@ -42,7 +42,8 @@ const GraphComponent = () => {
 
   return (
     <div>
-      <div className="flex justify-center mb-4">
+      
+      <div className="flex justify-center mb-4 mt-2">
         <button
           onClick={() => setViewType('monthly')}
           className={`px-4 py-2 rounded-md  ${viewType === 'monthly' ? 'bg-blue-700' : 'bg-blue-500'} text-white mr-2`}
@@ -58,6 +59,7 @@ const GraphComponent = () => {
       </div>
 
     <div className="border mt-2 rounded-md bg-slate-700 text-white">
+     <h3 className='flex justify-center text-3xl text-bold mt-2 mb-2'>Emitidos x Concluídos</h3>
       <ResponsiveContainer width="100%" height={400}>
           <LineChart data={dataToDisplay}>
             <CartesianGrid strokeDasharray="3 3" />

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import authService from './authService';
 
-const API_URL = 'http://10.1.1.3:8090/api'; // Base URL da API
+const API_URL = 'https://api-tickets-tp22.onrender.com/api'; // Base URL da API
 
 
 
@@ -266,26 +266,6 @@ const getUserById = async (userId) =>{
   
 };
 
-const getMetas = async () =>{
-  const token = authService.getToken();
-  if (!token) {
-    return Promise.reject(new Error('Usuário não está autenticado'));
-  }
-  try{
-    const response = await axios.get(`${API_URL}/metas/`, 
-    {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-    }});
-
-    return response.data;
-  }catch(error){
-    console.error('Erro ao buscar usuário:', error);
-    throw error;
-  }
-  
-
-}
 
 //TODO: create update password
 const updatePassword = async (user,password) =>{
@@ -307,13 +287,11 @@ const uploadNotaFiscal = async (nfe, file,ticketId) =>{
   formData.append('ticket', ticketId);
 
   console.log('api service retorno: ', formData);
-
   try{
     const response = await axios.post(url, formData,
     {
       headers: {
         'Authorization': `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data',
     }})
     return response.data;
 }catch(error){
@@ -322,29 +300,12 @@ const uploadNotaFiscal = async (nfe, file,ticketId) =>{
 }
 };
 
-const insertMetas = (vlMeta, sttMeta)=>{
-  const token = authService.getToken();
-  if (!token) {
-    return Promise.reject(new Error('Usuário não está autenticado'));
-  }
 
-  const url = `${API_URL}/metas/`;
-  
-  const newMeta = {
-    vlMeta: vlMeta, sttMeta: sttMeta,
-  };
-  return axios.post(url, newMeta,{
-    headers:{
-      Authorization:`Bearer ${token}`,
-    }
-  }); 
-};
 
 
 
 const apiService = {
   getUsers,
-  getMetas,
   getEmpresas,
   getTicketById,
   getTickets,
@@ -360,7 +321,7 @@ const apiService = {
   uploadNotaFiscal,
   getNotaFiscal,
   createTicket,
-  insertMetas,
+
 
 };
 

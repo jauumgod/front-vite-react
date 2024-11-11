@@ -22,7 +22,6 @@ import UserInfo from './pages/UserInfo.jsx';
 import MyTickets from './pages/MyTickets.jsx';
 import NotasFiscais from './pages/NotasFiscais.jsx';
 import ImageTicket from './pages/ImageTicket.jsx';
-import MetaDiaria from './pages/MetaDiaria.jsx';
 
 
 const router = createBrowserRouter([
@@ -32,6 +31,7 @@ const router = createBrowserRouter([
     element: <App/>,
     errorElement: <ErrorPage />,
     children: [
+      { path: '/', element: <Navigate to="/login" replace /> },
       { path: '/login', element: <LoginPage/> },
       { path: '/home', element: <ProtectedRoute element={<HomePage />} /> },
       { path: '/novo', element: <ProtectedRoute element={<CreateTicket />} /> },
@@ -45,7 +45,6 @@ const router = createBrowserRouter([
       { path: '/mytickets/', element: <ProtectedRoute element={<MyTickets />} /> },
       { path: '/baixarnf/', element: <ProtectedRoute element={<NotasFiscais />} /> },
       { path: '/imagem', element: <ProtectedRoute element={<ImageTicket />} /> },
-      { path: '/meta', element: <ProtectedRoute element={<MetaDiaria />} /> },
       { path: '/logout', element: <ProtectedRoute element={<Logout />} /> },
     ],
   },

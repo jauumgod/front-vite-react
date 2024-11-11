@@ -93,17 +93,12 @@ const HomePage = () => {
         
         
       </div>
-      <div className="grid grid-cols-3 gap-2 mt-2 m-2">
-        <div>
-          {/* <GraphComponent /> */}
-          <LiquidChart/>
-        </div>
-        <div>
+      <div className="flex justify-center">
+        <div >
           <PieChart/>
+          <GraphComponent/>
         </div>
-        <div>
-          <RadarChart />
-        </div>
+
       </div>
 
     </div>

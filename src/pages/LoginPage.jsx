@@ -30,7 +30,6 @@ const LoginPage = () => {
       catch(error){
         console.log('erro ao navegar: ', error);
       }
-
     } catch (error) {
       setError(error.message);
       console.log(error.message);

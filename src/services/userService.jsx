@@ -1,7 +1,8 @@
 import axios from 'axios';
 import authService from './authService';
 
-const API_URL = 'https://api-tickets-tp22.onrender.com/api';
+// const API_URL = 'https://api-tickets-tp22.onrender.com/api';
+const API_URL = 'http://10.1.1.3:8090/api'; // Base URL da API
 
 const createUser = (username, password, empresa, grupos) => {
   const url = `${API_URL}/users/`;
@@ -43,7 +44,24 @@ const createEmpresa = (empresa, cnpj, endereco, cidade) =>{
   });
 };
 
+const createTicket =(ticket)=>{
+  const url = `${API_URL}/tickets/`;
+  const token = authService.getToken();
+
+  if (!token) {
+    return Promise.reject(new Error('Usuário não autenticado.'));
+  }
+
+  return axios.post(url, ticket,{
+    headers:{
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+
 export default {
   createUser,
   createEmpresa,
+  createTicket,
 };

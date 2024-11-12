@@ -68,11 +68,11 @@ const TicketPrint = () => {
 
 
   return (
-    <div>
+    <div className="mt-5">
     <div className='flex-row space-x-1'>
-      <button onClick={()=> navigate(-1)} className="bg-slate-300 text-center text-slate-900 border rounded-md mt-2 ml-2 flex">
-        <ChevronLeftIcon/> Voltar
-      </button>
+    <button onClick={()=> navigate(-1)} className="bg-white text-center text-slate-900 border rounded-md mt-14 ml-2 flex">
+        <ChevronLeftIcon/><p>Voltar</p> 
+    </button>
     </div>
       <div className="ticket-print-container">
         <div className="logo-impressao">

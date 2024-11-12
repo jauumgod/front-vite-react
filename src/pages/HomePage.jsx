@@ -5,11 +5,8 @@ import {AppContext, useAppContext} from "../context/AppContext";
 import ComponentList from '../components/ComponentList';
 import GraphComponent from '../utils/GraphComponent';
 import { toast } from 'sonner';
-import Charts from '../utils/Charts';
-import BarChart from '../utils/BarChart';
-import RadarChart from '../utils/RadarChart';
 import PieChart from '../utils/PieChart';
-import LiquidChart from '../utils/LiquidChart';
+
 
 
 
@@ -93,14 +90,7 @@ const HomePage = () => {
         
         
       </div>
-      <div className="flex justify-center">
-        <div >
-          <PieChart/>
-          <GraphComponent/>
-        </div>
-
-      </div>
-
+        <div className='m-10'><GraphComponent/></div>
     </div>
       )}
     </div>

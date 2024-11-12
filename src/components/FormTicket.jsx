@@ -1,9 +1,9 @@
-import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import AppContext from '../context/AppContext';
 import apiService from '../services/apiService';
+import userService from '../services/userService';
 
 const FormTicket = () => {
   const [placa, setPlaca] = useState('');
@@ -48,15 +48,9 @@ const FormTicket = () => {
   };
   
   // Envia os dados do ticket para a API
-  const handleSubmit = (e) => {
+  const handleSubmit =  async (e) => {
     e.preventDefault();
     setIsSend(true);
-
-    const token = localStorage.getItem('token');
-    if (!token) {
-      console.error('Usuário não está autenticado');
-      return;
-    }
   
   const ticketData = {
     placa,
@@ -74,27 +68,20 @@ const FormTicket = () => {
     imagens: [],
     nf: [],
   };
-  
-  axios.post('http://127.0.0.1:8000/api/tickets/', ticketData, {
-    headers: { Authorization: `Bearer ${token}` },
-  })
-    .then(response => {
-      console.log('Ticket criado com sucesso:', response.data);
-      toast.success('Ticket Criado com sucesso!');
-      adicionarNotificacao(ticketData.titulo, ticketData.empresa);
-      const newTicketId = response.data.id;
-      console.log(newTicketId);
-      navigate('/print/', {state: {ticketId:newTicketId} });
-    })
-    .catch(error => {
-      if (error.response) {
-        console.error('Erro ao criar o ticket:', error.response.data);
-        toast.error('Erro ao criar o ticket!');
-      } else {
-        console.error('Erro ao criar o ticket:', error);
-        toast.error('Erro ao criar o ticket!');
-      }
-    });
+
+
+  try{
+   const response = await userService.createTicket(ticketData);
+   console.log('Ticket criado com sucesso:', response);
+   toast.success('Ticket Criado com sucesso!');
+   adicionarNotificacao(ticketData.titulo, ticketData.empresa);
+   console.log(response);
+   const newTicketId = response.data.id;
+   navigate('/print/', {state: {ticketId:newTicketId} });
+  }catch(error) {
+    console.error('erro ao criar ticket: ', error);
+
+  };
 };
 
 
@@ -114,10 +101,10 @@ const FormTicket = () => {
             />
             </div>
 
-            <div>
+    <div>
       <label className="text-white dark:text-gray-200">Produto</label>
       <select
-        value={produtoSelected}
+        value={produtoSelected || ""}
         onChange={(e) => setProdutoSelected(e.target.value)}
         required
         className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"

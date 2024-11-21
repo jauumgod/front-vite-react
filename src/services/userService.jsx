@@ -1,6 +1,6 @@
 import axios from 'axios';
 import authService from './authService';
-import API_URL from './api.js';
+import API_URL from './api.jsx';
 
 
 

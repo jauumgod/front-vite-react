@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';
-import API_URL from './api.js';
+import API_URL from './api.jsx';
 
 
 

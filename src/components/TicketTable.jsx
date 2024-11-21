@@ -91,7 +91,7 @@ const TicketTable = ({ tickets, toggleCompleteStatus }) => {
           <th onClick={() => requestSort('produto')} className="cursor-pointer border border-slate-800 bg-slate-900">Produto</th>
           <th onClick={() => requestSort('transportadora')} className="cursor-pointer border border-slate-800 bg-slate-900">Transportadora</th>
           <th onClick={() => requestSort('cliente')} className="cursor-pointer border border-slate-800 bg-slate-900">Cliente</th>
-          <th onClick={() => requestSort('peso_liquido')} className="cursor-pointer border border-slate-800 bg-slate-900">Peso Líquido</th>
+          <th className="cursor-pointer border border-slate-800 bg-slate-900">Peso Líquido</th>
           <th onClick={() => requestSort('criacao')} className="cursor-pointer border border-slate-800 bg-slate-900">Data criação</th>
           <th onClick={() => requestSort('lote_leira')} className="cursor-pointer border border-slate-800 bg-slate-900">Horário</th>
           <th className="border border-slate-800 bg-slate-900">Opções</th>

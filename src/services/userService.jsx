@@ -1,8 +1,9 @@
 import axios from 'axios';
 import authService from './authService';
+import API_URL from './api.js';
 
-// const API_URL = 'https://api-tickets-tp22.onrender.com/api';
-const API_URL = 'http://10.1.1.3:8090/api'; // Base URL da API
+
+
 
 const createUser = (username, password, empresa, grupos) => {
   const url = `${API_URL}/users/`;

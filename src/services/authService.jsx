@@ -1,10 +1,9 @@
 
 import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';
+import API_URL from './api.js';
 
 
-// const API_URL = 'https://api-tickets-tp22.onrender.com/api'; // Base URL da API
-const API_URL = 'http://10.1.1.3:8090/api'; // Base URL da API
 
 const login = async (username, password) => {
   try {

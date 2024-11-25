@@ -4,6 +4,7 @@ import { BellDot, CircleUser } from "lucide-react";
 import LogoutUser from "./LogoutUser";
 import { AppContext } from "../context/AppContext.jsx";
 import './css/navbar.css'
+import imagem from '../assets/logo-organics.png';
 
 
 const Navbar = () => {
@@ -38,8 +39,8 @@ const Navbar = () => {
             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
               <div className="flex flex-shrink-0 items-center">
                 <img
-                  className="h-8 w-auto"
-                  src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
+                  className="h-9 w-auto"
+                  src={imagem}
                   alt="Your Company"
                 />
               </div>

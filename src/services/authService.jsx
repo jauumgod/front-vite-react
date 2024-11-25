@@ -27,6 +27,7 @@ const login = async (username, password) => {
 
     return user; // Retorna o usuário após o login
   } catch (error) {
+    console.error(error);
     throw new Error(
       error.response?.data?.detail || 'Erro ao fazer login, tente novamente.'
     );

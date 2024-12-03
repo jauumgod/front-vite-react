@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import apiService from '../services/apiService';
-import './css/TicketPrint.css';
-import imagem from '../assets/logo-organics.png';
+import apiService from '../../services/apiService';
+import '../css/TicketPrint.css';
+import imagem from '../auth/img/logo-organics.png';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ChevronLeftIcon } from 'lucide-react';
-import ImageModal from '../components/ImageModal';
+import ImageModal from '../../components/ImageModal';
 import { toast } from 'sonner';
 
 

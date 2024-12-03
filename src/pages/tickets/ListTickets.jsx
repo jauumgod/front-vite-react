@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import apiService from '../services/apiService';
-import withAuth from '../utils/withAuth';
+import apiService from '../../services/apiService';
+import withAuth from '../../utils/withAuth';
 import { toast } from 'sonner';
-import TicketTable from '../components/TicketTable';
-import LoadingSpinner from '../components/LoadingSpinner';
-import Pagination from '../components/Pagination';
-import SearchComponent from '../components/SearchComponent';
+import TicketTable from '../../components/TicketTable';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import Pagination from '../../components/Pagination';
+import SearchComponent from '../../components/SearchComponent';
 
 
 const ListTickets = () => {

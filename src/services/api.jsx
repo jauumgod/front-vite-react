@@ -1,8 +1,8 @@
 
 
 
-const API_URL = 'https://ticketsapi.icu/api';
+// const API_URL = 'https://ticketsapi.icu/api';
 
-// const API_URL = 'http://104.234.173.86:8090/api'; // Base URL da API
+// const API_URL = 'http://127.0.0.1:8000/api';
 
 export default API_URL;

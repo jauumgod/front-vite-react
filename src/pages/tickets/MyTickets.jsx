@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import ButtonComponent from "../components/ButtonComponent";
-import H2Component from "../components/H2Component";
-import apiService from '../services/apiService';
-import withAuth from '../utils/withAuth';
-import SearchComponent from '../components/SearchComponent';
+import ButtonComponent from "../../components/ButtonComponent";
+import H2Component from "../../components/H2Component";
+import apiService from '../../services/apiService';
+import withAuth from '../../utils/withAuth';
+import SearchComponent from '../../components/SearchComponent';
 import { ArrowDownToLine, Printer } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { button } from '@material-tailwind/react';
 
 const MyTickets = () => {
   const [tickets, setTickets] = useState([]);

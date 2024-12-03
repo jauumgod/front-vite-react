@@ -1,4 +1,4 @@
-import FormTicket from '../components/FormTicket.jsx'
+import FormTicket from '../../components/FormTicket.jsx'
 
 
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import TableUser from "../components/TableUsers";
-import TableEmpresas from "../components/TableEmpresas";
-import TicketsPessoa from "./TicketsPessoa";
+import TableUser from "../../components/TableUsers";
+import TableEmpresas from "../../components/TableEmpresas";
+import TicketsPessoa from "../tickets/TicketsPessoa";
 
 const Configuracoes = () => {
   // Estado para armazenar a aba selecionada

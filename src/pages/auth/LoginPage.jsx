@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import authService from "../services/authService";
-import InputComponent from "../components/InputComponent";
-import AppContext from "../context/AppContext";
+import authService from "../../services/authService";
+import InputComponent from "../../components/InputComponent";
+import AppContext from "../../context/AppContext";
 import { MoveRight } from 'lucide-react';
 import { toast } from 'sonner';
-import './css/login.css';
-import imagem from '../assets/logo-organics.png';
+import '../css/login.css';
+import imagem from './img/logo-organics.png';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');

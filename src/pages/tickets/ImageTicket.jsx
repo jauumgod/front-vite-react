@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import apiService from "../services/apiService";
+import apiService from "../../services/apiService";
 import { toast } from "sonner";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ChevronLeftIcon } from "lucide-react";

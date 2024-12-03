@@ -6,22 +6,22 @@ import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import './index.css';
 import { AppProvider } from './context/AppContext'; // Importe o AppProvider
 import App from './App.jsx';
-import ListTickets from './pages/ListTickets.jsx';
-import CreateTicket from './pages/CreateTicket.jsx';
-import TicketPrint from './pages/TicketPrint.jsx';
+import ListTickets from './pages/tickets/ListTickets.jsx';
+import CreateTicket from './pages/tickets/CreateTicket.jsx';
+import TicketPrint from './pages/tickets/TicketPrint.jsx';
 import HomePage from './pages/HomePage.jsx';
-import Configuracoes from './pages/Configuracoes.jsx';
-import LoginPage from './pages/LoginPage.jsx';
-import ErrorPage from './pages/ErrorPage.jsx';
-import Logout from './pages/Logout.jsx';
+import Configuracoes from './pages/settings/Configuracoes.jsx';
+import LoginPage from './pages/auth/LoginPage.jsx';
+import ErrorPage from './pages/404/ErrorPage.jsx';
+import Logout from './pages/auth/Logout.jsx';
 import NovoUsuario from './pages/NovoUsuario.jsx';
 import NovaEmpresa from './pages/NovaEmpresa.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
-import EditarUsuario from './pages/EditarUsuario.jsx';
-import UserInfo from './pages/UserInfo.jsx';
-import MyTickets from './pages/MyTickets.jsx';
+import EditarUsuario from './pages/settings/EditarUsuario.jsx';
+import UserInfo from './pages/settings/UserInfo.jsx';
+import MyTickets from './pages/tickets/MyTickets.jsx';
 import NotasFiscais from './pages/NotasFiscais.jsx';
-import ImageTicket from './pages/ImageTicket.jsx';
+import ImageTicket from './pages/tickets/ImageTicket.jsx';
 
 
 const router = createBrowserRouter([

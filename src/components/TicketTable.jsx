@@ -82,6 +82,15 @@ const TicketTable = ({ tickets, toggleCompleteStatus }) => {
     setSortConfig({ key, direction });
   };
 
+  function formatTime(datetimeString) { const date = new Date(datetimeString);
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  } // Exemplo de uso
+
+  const datetimeString = sortedTickets.horario;
+  const formattedTime = formatTime(datetimeString); console.log
+
   return (
     <table className="border-separate border border-slate-500 py-3">
       <thead>

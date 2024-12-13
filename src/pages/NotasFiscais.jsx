@@ -30,13 +30,10 @@ const NotasFiscais = () => {
     };
 
     return (
-        <div>
+        <div className="mt-20">
             {notafiscal ? (
-                <div className="text-center text-white">
-                    <div className="flex justify-center mt-4">
-                        {notafiscal.nfe}
-                    </div>
-                    <div className="flex justify-center mt-4">
+                <div className="text-center text-white mt-20">
+                    <div className="flex justify-center mt-20">
                         <button 
                             onClick={handleDownload} 
                             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-800 flex justify-center flex-row"
